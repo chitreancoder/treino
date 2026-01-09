@@ -72,6 +72,7 @@ import Layout from '../layouts/Layout.astro';
 
         <!-- Countdown/AMRAP config -->
         <div id="config-countdown" class="config-section hidden">
+          <p class="text-xs text-[var(--color-text-dim)] mb-2">Countdown timer - beeps at 3-2-1 and end</p>
           <div class="grid grid-cols-2 gap-3">
             <label class="block">
               <span class="font-mono text-xs text-[var(--color-text-muted)]">MINUTES</span>
@@ -84,22 +85,20 @@ import Layout from '../layouts/Layout.astro';
                 class="w-full mt-1 px-4 py-3 rounded-xl bg-[var(--color-bg)] border border-[var(--color-border)] font-mono text-lg text-[var(--color-text)] focus:border-lime focus:outline-none">
             </label>
           </div>
+          <!-- Preview of total time -->
+          <div id="countdown-preview" class="mt-2 text-center">
+            <span class="font-mono text-sm text-lime">Total: 12:00</span>
+          </div>
         </div>
 
         <!-- EMOM config -->
         <div id="config-emom" class="config-section hidden">
-          <div class="grid grid-cols-2 gap-3">
-            <label class="block">
-              <span class="font-mono text-xs text-[var(--color-text-muted)]">MINUTES</span>
-              <input type="number" id="emom-minutes" value="10" min="1" max="60"
-                class="w-full mt-1 px-4 py-3 rounded-xl bg-[var(--color-bg)] border border-[var(--color-border)] font-mono text-lg text-[var(--color-text)] focus:border-lime focus:outline-none">
-            </label>
-            <label class="block">
-              <span class="font-mono text-xs text-[var(--color-text-muted)]">SECONDS</span>
-              <input type="number" id="emom-seconds" value="0" min="0" max="59"
-                class="w-full mt-1 px-4 py-3 rounded-xl bg-[var(--color-bg)] border border-[var(--color-border)] font-mono text-lg text-[var(--color-text)] focus:border-lime focus:outline-none">
-            </label>
-          </div>
+          <p class="text-xs text-[var(--color-text-dim)] mb-2">Beeps every minute to start next round</p>
+          <label class="block">
+            <span class="font-mono text-xs text-[var(--color-text-muted)]">TOTAL MINUTES</span>
+            <input type="number" id="emom-minutes" value="10" min="1" max="60"
+              class="w-full mt-1 px-4 py-3 rounded-xl bg-[var(--color-bg)] border border-[var(--color-border)] font-mono text-lg text-[var(--color-text)] focus:border-lime focus:outline-none">
+          </label>
         </div>
 
         <!-- Tabata config -->
@@ -616,10 +615,9 @@ import Layout from '../layouts/Layout.astro';
           break;
 
         case 'emom':
-          const emomMins = parseInt(document.getElementById('emom-minutes').value) || 0;
-          const emomSecs = parseInt(document.getElementById('emom-seconds').value) || 0;
-          state.targetTime = (emomMins * 60 + emomSecs) * 1000;
-          state.totalRounds = emomMins || 1;
+          const emomMins = parseInt(document.getElementById('emom-minutes').value) || 1;
+          state.targetTime = emomMins * 60 * 1000;
+          state.totalRounds = emomMins;
           roundInfo.classList.remove('hidden');
           currentRoundEl.textContent = '1';
           totalRoundsEl.textContent = emomMins;
@@ -735,8 +733,22 @@ import Layout from '../layouts/Layout.astro';
       });
     });
 
+    // Update countdown preview when inputs change
+    function updateCountdownPreview() {
+      const mins = parseInt(document.getElementById('countdown-minutes').value) || 0;
+      const secs = parseInt(document.getElementById('countdown-seconds').value) || 0;
+      const preview = document.getElementById('countdown-preview');
+      if (preview) {
+        preview.innerHTML = `<span class="font-mono text-sm text-lime">Total: ${mins}:${String(secs).padStart(2, '0')}</span>`;
+      }
+    }
+
+    document.getElementById('countdown-minutes').addEventListener('input', updateCountdownPreview);
+    document.getElementById('countdown-seconds').addEventListener('input', updateCountdownPreview);
+
     // Initialize
     setupMode();
     updateDisplay();
+    updateCountdownPreview();
   </script>
 </Layout>

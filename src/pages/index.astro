@@ -10,13 +10,16 @@ import plan from '../../data/plan.json';
 import log from '../../data/log.json';
 
 // Get today's date in YYYY-MM-DD format
-// For demo purposes, we'll use a date that has data
-const today = '2025-01-14'; // Wednesday Upper Body - has log data
-// const today = new Date().toISOString().split('T')[0];
+const today = new Date().toISOString().split('T')[0];
 
-// Find today's workout in plan
-const week = Object.values(plan.weeks)[0] as Record<string, any>;
-const todayPlan = week[today];
+// Find today's workout across all weeks in plan
+let todayPlan = null;
+for (const week of Object.values(plan.weeks) as Record<string, any>[]) {
+  if (week[today]) {
+    todayPlan = week[today];
+    break;
+  }
+}
 const todayLog = (log as Record<string, any>)[today];
 
 // Format date for display

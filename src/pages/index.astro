@@ -10,8 +10,15 @@ import WeekNav from '../components/WeekNav.astro';
 import plan from '../../data/plan.json';
 import log from '../../data/log.json';
 
-// Get today's date in YYYY-MM-DD format
-const today = new Date().toISOString().split('T')[0];
+// Get all available dates for checking
+const allDates: string[] = [];
+for (const week of Object.values(plan.weeks) as Record<string, any>[]) {
+  allDates.push(...Object.keys(week));
+}
+const sortedDates = allDates.sort();
+
+// Default to first available date (will be overridden by client-side script)
+const today = sortedDates[0] || new Date().toLocaleDateString('en-CA');
 
 // Get all available dates for navigation
 const availableDates: string[] = [];
@@ -62,7 +69,7 @@ const completedExercises = todayLog?.exercises?.filter((e: any) => e.done)?.leng
     <WeekNav currentDate={today} availableDates={availableDates} />
 
     <!-- Header -->
-    <header class="mb-8 opacity-0 animate-fade-up">
+    <header class="mb-8 animate-fade-up">
       <div class="flex items-center justify-between mb-4">
         <div>
           <div class="flex items-center gap-2">
@@ -117,7 +124,7 @@ const completedExercises = todayLog?.exercises?.filter((e: any) => e.done)?.leng
       <>
         <!-- Warmup -->
         {todayPlan.warmup && (
-          <section class="mb-6 opacity-0 animate-fade-up stagger-1">
+          <section class="mb-6 animate-fade-up stagger-1">
             <div class="p-3 rounded-lg bg-[var(--color-card)]/50 border border-[var(--color-border)]/50">
               <span class="font-mono text-xs text-[var(--color-text-dim)] uppercase">Warmup</span>
               <p class="text-sm text-[var(--color-text-muted)] mt-1">{todayPlan.warmup}</p>
@@ -126,14 +133,14 @@ const completedExercises = todayLog?.exercises?.filter((e: any) => e.done)?.leng
         )}
 
         <!-- Main exercises -->
-        <section class="mb-8 opacity-0 animate-fade-up stagger-2">
+        <section class="mb-8 animate-fade-up stagger-2">
           <SectionHeader title="Main Work" subtitle={`${todayPlan.exercises.length} exercises`} />
           <div class="space-y-3">
             {todayPlan.exercises.map((exercise: any, i: number) => {
               const exerciseLog = getExerciseLog(exercise.id);
               const lastWeekKg = getLastWeekKg(exercise.id);
               return (
-                <div class={`opacity-0 animate-fade-up stagger-${Math.min(i + 3, 8)}`}>
+                <div class={`animate-fade-up stagger-${Math.min(i + 3, 8)}`}>
                   <ExerciseRow
                     name={exercise.name}
                     sets={exercise.sets}
@@ -153,7 +160,7 @@ const completedExercises = todayLog?.exercises?.filter((e: any) => e.done)?.leng
 
         <!-- Core -->
         {todayPlan.core && todayPlan.core.length > 0 && (
-          <section class="mb-8 opacity-0 animate-fade-up stagger-6">
+          <section class="mb-8 animate-fade-up stagger-6">
             <SectionHeader title="Core" />
             <div class="grid grid-cols-2 gap-3">
               {todayPlan.core.map((exercise: any) => (
@@ -178,7 +185,7 @@ const completedExercises = todayLog?.exercises?.filter((e: any) => e.done)?.leng
 
         <!-- Finisher -->
         {todayPlan.finisher && (
-          <section class="mb-8 opacity-0 animate-fade-up stagger-7">
+          <section class="mb-8 animate-fade-up stagger-7">
             <SectionHeader title="Finisher" />
             <FinisherBlock
               name={todayPlan.finisher.name}
@@ -192,7 +199,7 @@ const completedExercises = todayLog?.exercises?.filter((e: any) => e.done)?.leng
 
         <!-- Mobility (for cardio/recovery days) -->
         {todayPlan.mobility && (
-          <section class="mb-8 opacity-0 animate-fade-up stagger-7">
+          <section class="mb-8 animate-fade-up stagger-7">
             <SectionHeader title="Mobility" subtitle={todayPlan.mobility.duration} />
             <div class="p-4 rounded-xl bg-[var(--color-card)] border border-[var(--color-border)]">
               <h4 class="font-display text-lg text-[var(--color-text)]">{todayPlan.mobility.name}</h4>
@@ -205,7 +212,7 @@ const completedExercises = todayLog?.exercises?.filter((e: any) => e.done)?.leng
 
         <!-- Session note -->
         {todayLog?.session_note && (
-          <section class="mb-6 opacity-0 animate-fade-up stagger-8">
+          <section class="mb-6 animate-fade-up stagger-8">
             <div class="p-4 rounded-xl bg-[var(--color-card)] border border-[var(--color-border)]">
               <span class="font-mono text-xs text-[var(--color-text-dim)] uppercase">Session Notes</span>
               <p class="text-sm text-[var(--color-text)] mt-2">"{todayLog.session_note}"</p>
@@ -215,7 +222,7 @@ const completedExercises = todayLog?.exercises?.filter((e: any) => e.done)?.leng
 
         <!-- Claude insight -->
         {todayLog?.claude_insight && (
-          <section class="mb-8 opacity-0 animate-fade-up stagger-8">
+          <section class="mb-8 animate-fade-up stagger-8">
             <ClaudeInsight insight={todayLog.claude_insight} />
           </section>
         )}
@@ -240,4 +247,17 @@ const completedExercises = todayLog?.exercises?.filter((e: any) => e.done)?.leng
       </p>
     </footer>
   </div>
+
+  <script define:vars={{ sortedDates, today }}>
+    // Client-side: detect user's local date and redirect if needed
+    const userToday = new Date().toLocaleDateString('en-CA'); // YYYY-MM-DD
+
+    // If we're showing the wrong date, redirect to correct one
+    if (userToday !== today) {
+      // Check if user's today has a workout
+      if (sortedDates.includes(userToday)) {
+        window.location.replace(`/day/${userToday}`);
+      }
+    }
+  </script>
 </Layout>

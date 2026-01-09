@@ -1,17 +1,130 @@
 {
+  "2025-12-31": {
+    "completed": true,
+    "session_note": "Return week - cardio day",
+    "exercises": [
+      { "id": "rowing-zone2", "actual_kg": null, "done": true, "feeling": "529 cal / 8811m" }
+    ],
+    "core_done": false,
+    "finisher_done": true,
+    "finisher_time": null,
+    "claude_insight": "Good return to training after break. Zone 2 cardio with Turkish Get-ups is a solid way to ease back in."
+  },
+  "2026-01-01": {
+    "completed": true,
+    "session_note": "New Year's Day session - solid start",
+    "exercises": [
+      { "id": "back-squat", "actual_kg": 90, "done": true, "feeling": "Good depth, tempo on point" },
+      { "id": "box-jump", "actual_kg": null, "done": true, "feeling": "30 inch + 40kg plates" },
+      { "id": "split-squat-kb", "actual_kg": null, "done": true, "feeling": "2x16kg KBs felt good" },
+      { "id": "rdl", "actual_kg": 80, "done": true, "feeling": "Went heavier than target" },
+      { "id": "calf-raise", "actual_kg": 60, "done": true, "feeling": null }
+    ],
+    "core_done": true,
+    "finisher_done": false,
+    "claude_insight": "Strong session to kick off the year. RDL at 80kg vs 72kg target shows good strength. Keep building."
+  },
+  "2026-01-02": {
+    "completed": true,
+    "session_note": "Recovery cardio + ankle rehab",
+    "exercises": [
+      { "id": "bike-zone2", "actual_kg": null, "done": true, "feeling": "440 cal" }
+    ],
+    "core_done": false,
+    "finisher_done": false,
+    "mobility_done": true,
+    "claude_insight": "Good recovery work. Ankle rehab is key for long-term pitch performance."
+  },
+  "2026-01-03": {
+    "completed": true,
+    "session_note": "Upper body day - all exercises done",
+    "exercises": [
+      { "id": "bench-press", "actual_kg": 60, "done": true, "feeling": "Went 6kg over target" },
+      { "id": "one-arm-row", "actual_kg": 30, "done": true, "feeling": null },
+      { "id": "incline-db-press", "actual_kg": 22, "done": true, "feeling": null },
+      { "id": "face-pull", "actual_kg": 25, "done": true, "feeling": null },
+      { "id": "pull-ups", "actual_kg": null, "done": true, "feeling": "Bodyweight" }
+    ],
+    "core_done": true,
+    "finisher_done": false,
+    "claude_insight": "Solid upper body work. Bench at 60kg vs 54kg target - strength is there. Core work completed too."
+  },
+  "2026-01-04": {
+    "completed": true,
+    "session_note": "Zone 2 run + mobility",
+    "exercises": [
+      { "id": "treadmill-zone2", "actual_kg": null, "done": true, "feeling": "6.2km covered" }
+    ],
+    "core_done": false,
+    "finisher_done": false,
+    "mobility_done": true,
+    "claude_insight": "Nice Zone 2 session. 6.2km in 40 min is good pace for aerobic base building."
+  },
+  "2026-01-05": {
+    "completed": true,
+    "session_note": "Full lower + power session with finisher",
+    "exercises": [
+      { "id": "back-squat", "actual_kg": 90, "done": true, "feeling": "Above target" },
+      { "id": "box-jump", "actual_kg": null, "done": true, "feeling": "30 inch + 40kg plates" },
+      { "id": "lateral-bounds", "actual_kg": null, "done": true, "feeling": "Good explosiveness" },
+      { "id": "split-squat-kb", "actual_kg": null, "done": true, "feeling": "2x16kg KBs" },
+      { "id": "rdl", "actual_kg": 80, "done": true, "feeling": "Above target again" }
+    ],
+    "core_done": true,
+    "finisher_done": true,
+    "finisher_time": "3:45",
+    "claude_insight": "Excellent session. Squats and RDL both above target. Finisher in 3:45 is fast - good conditioning."
+  },
+  "2026-01-06": {
+    "completed": true,
+    "session_note": "HIIT day - bike sprints + row intervals",
+    "exercises": [
+      { "id": "bike-sprints", "actual_kg": null, "done": true, "feeling": "All out efforts" },
+      { "id": "row-intervals", "actual_kg": null, "done": true, "feeling": "6x200m done" }
+    ],
+    "core_done": false,
+    "finisher_done": false,
+    "mobility_done": true,
+    "claude_insight": "Good HIIT work. Alternating bike and row hits different energy systems - smart programming."
+  },
+  "2026-01-07": {
+    "completed": true,
+    "session_note": "Upper body + brutal finisher",
+    "exercises": [
+      { "id": "bench-press", "actual_kg": 50, "done": true, "feeling": "Hit target" },
+      { "id": "one-arm-row", "actual_kg": 24, "done": true, "feeling": null },
+      { "id": "face-pull", "actual_kg": 30, "done": true, "feeling": null },
+      { "id": "pull-ups", "actual_kg": null, "done": true, "feeling": "Bodyweight" }
+    ],
+    "core_done": true,
+    "finisher_done": true,
+    "finisher_time": "10:53",
+    "claude_insight": "All exercises completed. Finisher with sled push is tough - 10:53 is solid effort."
+  },
+  "2026-01-08": {
+    "completed": true,
+    "session_note": "Recovery row + full mobility",
+    "exercises": [
+      { "id": "rower-zone2", "actual_kg": null, "done": true, "feeling": "8413m" }
+    ],
+    "core_done": false,
+    "finisher_done": false,
+    "mobility_done": true,
+    "claude_insight": "8413m in 40 min is good pace. Full mobility work is paying dividends for ankle health."
+  },
   "2026-01-09": {
     "completed": true,
-    "session_note": "Solid session, everything done",
+    "session_note": "Lower unilateral - everything done",
     "exercises": [
       { "id": "front-squat", "actual_kg": 66.5, "done": true, "feeling": "Felt light - go higher next time" },
-      { "id": "broad-jumps", "done": true, "feeling": "Good" },
+      { "id": "broad-jumps", "actual_kg": null, "done": true, "feeling": "Good" },
       { "id": "explosive-stepups", "actual_kg": 40, "done": true, "feeling": "Form felt off - review technique" },
-      { "id": "single-leg-rdl", "actual_kg": 20, "done": true, "feeling": "Solid" },
-      { "id": "hip-thrust", "actual_kg": 40, "done": true, "feeling": "Good" }
+      { "id": "single-leg-rdl", "actual_kg": 20, "done": true, "feeling": null },
+      { "id": "hip-thrust", "actual_kg": 40, "done": true, "feeling": null }
     ],
     "core_done": true,
     "finisher_done": true,
     "finisher_time": "10:43",
-    "claude_insight": "All exercises completed. Front squat felt light at 66.5kg - consider bumping to 70kg next week. Review step-up form before next lower session."
+    "claude_insight": "All exercises completed. Front squat felt light at 66.5kg - bump to 70-75kg next time. Step-up form needs attention."
   }
 }

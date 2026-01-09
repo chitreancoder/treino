@@ -6,23 +6,25 @@ interface Props {
 
 const { currentDate, availableDates } = Astro.props;
 
-// Get the week containing the current date
-const currentDateObj = new Date(currentDate + 'T00:00:00');
+// Parse date parts to avoid timezone issues
+const [year, month, day] = currentDate.split('-').map(Number);
+const currentDateObj = new Date(year, month - 1, day, 12, 0, 0); // noon to avoid DST issues
+
 const dayOfWeek = currentDateObj.getDay(); // 0 = Sunday
 const mondayOffset = dayOfWeek === 0 ? -6 : 1 - dayOfWeek;
 
 // Generate the week's dates (Mon-Sun)
 const weekDates: { date: string; dayLetter: string; isToday: boolean; hasWorkout: boolean; isCurrent: boolean }[] = [];
+const dayLetters = ['M', 'T', 'W', 'T', 'F', 'S', 'S'];
+
 for (let i = 0; i < 7; i++) {
-  const d = new Date(currentDateObj);
-  d.setDate(currentDateObj.getDate() + mondayOffset + i);
-  const dateStr = d.toISOString().split('T')[0];
-  const dayLetters = ['M', 'T', 'W', 'T', 'F', 'S', 'S'];
+  const d = new Date(year, month - 1, day + mondayOffset + i, 12, 0, 0);
+  const dateStr = `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, '0')}-${String(d.getDate()).padStart(2, '0')}`;
 
   weekDates.push({
     date: dateStr,
     dayLetter: dayLetters[i],
-    isToday: dateStr === new Date().toISOString().split('T')[0],
+    isToday: false, // Will be set client-side
     hasWorkout: availableDates.includes(dateStr),
     isCurrent: dateStr === currentDate
   });
@@ -51,16 +53,17 @@ const nextDate = currentIdx < sortedDates.length - 1 ? sortedDates[currentIdx + 
     {weekDates.map((day) => (
       <a
         href={day.hasWorkout ? `/day/${day.date}` : '#'}
+        data-date={day.date}
         class={`
-          w-9 h-12 rounded-lg flex flex-col items-center justify-center text-xs font-mono transition-all
+          week-day-btn w-9 h-12 rounded-lg flex flex-col items-center justify-center text-xs font-mono transition-all
           ${day.isCurrent ? 'bg-lime text-black' : ''}
           ${!day.isCurrent && day.hasWorkout ? 'bg-[var(--color-card)] border border-[var(--color-border)] hover:border-[var(--color-lime)] text-[var(--color-text)]' : ''}
           ${!day.isCurrent && !day.hasWorkout ? 'text-[var(--color-text-dim)] pointer-events-none' : ''}
         `}
       >
         <span class="text-[10px] opacity-70">{day.dayLetter}</span>
-        <span class={`font-semibold ${day.isToday && !day.isCurrent ? 'underline decoration-lime' : ''}`}>
-          {new Date(day.date + 'T00:00:00').getDate()}
+        <span class="day-num font-semibold">
+          {parseInt(day.date.split('-')[2])}
         </span>
       </a>
     ))}
@@ -76,3 +79,15 @@ const nextDate = currentIdx < sortedDates.length - 1 ? sortedDates[currentIdx + 
     </svg>
   </a>
 </nav>
+
+<script>
+  // Mark today's date based on user's local timezone
+  const userToday = new Date().toLocaleDateString('en-CA');
+  document.querySelectorAll('.week-day-btn').forEach(btn => {
+    const date = btn.getAttribute('data-date');
+    const dayNum = btn.querySelector('.day-num');
+    if (date === userToday && dayNum && !btn.classList.contains('bg-lime')) {
+      dayNum.classList.add('underline', 'decoration-lime');
+    }
+  });
+</script>

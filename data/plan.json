@@ -7,26 +7,176 @@
     "current_weight": 84
   },
   "cycle": {
-    "name": "Week 2 - Full Week",
-    "start_date": "2026-01-05",
-    "end_date": "2026-01-11"
+    "name": "Return + Build Phase",
+    "start_date": "2025-12-31",
+    "end_date": "2026-01-16"
   },
   "weeks": {
+    "week-1": {
+      "2025-12-31": {
+        "day": "Wednesday",
+        "type": "Cardio Zone 2",
+        "warmup": "Inch Worms 3x10, Glute Bridge 3x20, Hollow Rocks 3x20 (Circuit x3)",
+        "exercises": [
+          { "id": "rowing-zone2", "name": "Rowing (Zone 2)", "sets": "40 min", "target_kg": null, "notes": "529 cal / 8811m" }
+        ],
+        "core": [],
+        "finisher": {
+          "name": "Turkish Get Up",
+          "rounds": 1,
+          "details": "5+5 reps @ 8kg KB"
+        }
+      },
+      "2026-01-01": {
+        "day": "Thursday",
+        "type": "Lower + Power",
+        "warmup": "5min bike + mobility (10-12 min)",
+        "exercises": [
+          { "id": "back-squat", "name": "Back Squat", "sets": "4x5", "target_kg": 90, "target_pct": "60%", "notes": "Tempo 3-1-X, full depth" },
+          { "id": "box-jump", "name": "Box Jump (submax)", "sets": "4x3", "target_kg": null, "notes": "30 inch + 2x20kg plates" },
+          { "id": "split-squat-kb", "name": "Split Squat (KB)", "sets": "3x8/8", "target_kg": null, "notes": "2x16kg KBs" },
+          { "id": "rdl", "name": "RDL", "sets": "3x8", "target_kg": 72, "target_pct": "60%", "notes": null },
+          { "id": "calf-raise", "name": "Standing Calf Raise", "sets": "2x12", "target_kg": 60, "notes": null }
+        ],
+        "core": [
+          { "id": "plank", "name": "Plank", "sets": "3x1min" },
+          { "id": "toe-touches", "name": "Toe Touches", "sets": "1x15" }
+        ],
+        "finisher": null
+      },
+      "2026-01-02": {
+        "day": "Friday",
+        "type": "Cardio + Recovery",
+        "warmup": "Inch Worms 3x10, Glute Bridge 3x20, Cossack Squat 3x20 (Circuit x3)",
+        "exercises": [
+          { "id": "bike-zone2", "name": "Bike (Zone 2)", "sets": "40 min", "target_kg": null, "notes": "440 cal" }
+        ],
+        "core": [],
+        "finisher": null,
+        "mobility": {
+          "name": "Ankle Mobility/Rehab",
+          "duration": "10 min"
+        }
+      },
+      "2026-01-03": {
+        "day": "Saturday",
+        "type": "Upper Body",
+        "warmup": "Band pull-aparts + scap push-ups (10 min)",
+        "exercises": [
+          { "id": "bench-press", "name": "Bench Press", "sets": "4x6", "target_kg": 54, "target_pct": "60%", "notes": null },
+          { "id": "one-arm-row", "name": "1-Arm DB Row", "sets": "4x10/10", "target_kg": 30, "notes": null },
+          { "id": "incline-db-press", "name": "Incline DB Press", "sets": "3x10", "target_kg": 22, "notes": null },
+          { "id": "face-pull", "name": "Face Pull", "sets": "3x15", "target_kg": 25, "notes": null },
+          { "id": "pull-ups", "name": "Pull-ups", "sets": "3x8", "target_kg": null, "notes": "Bodyweight" }
+        ],
+        "core": [
+          { "id": "v-ups", "name": "V Ups", "sets": "3x15" },
+          { "id": "pallof-press", "name": "Pallof Press", "sets": "3x12", "target_kg": 25 },
+          { "id": "russian-twist", "name": "Russian Twist", "sets": "3x20", "target_kg": 12 }
+        ],
+        "finisher": null
+      },
+      "2026-01-04": {
+        "day": "Sunday",
+        "type": "Cardio + Recovery",
+        "warmup": "Inch Worms 2x10, Glute Bridge 2x15, Cossack Squat 2x10",
+        "exercises": [
+          { "id": "treadmill-zone2", "name": "Treadmill Run (Zone 2)", "sets": "40 min", "target_kg": null, "notes": "6.2km" }
+        ],
+        "core": [],
+        "finisher": null,
+        "mobility": {
+          "name": "Ankle Rehab + Stretching",
+          "duration": "15 min"
+        }
+      }
+    },
     "week-2": {
+      "2026-01-05": {
+        "day": "Monday",
+        "type": "Lower + Power",
+        "warmup": "5min bike + mobility (10-12 min)",
+        "exercises": [
+          { "id": "back-squat", "name": "Back Squat", "sets": "3x8", "target_kg": 83, "target_pct": "55%", "notes": null },
+          { "id": "box-jump", "name": "Box Jump", "sets": "3x5", "target_kg": null, "notes": "30 inch + 2x20kg plates" },
+          { "id": "lateral-bounds", "name": "Lateral Bounds", "sets": "3x6/6", "target_kg": null, "notes": "Explosive" },
+          { "id": "split-squat-kb", "name": "Split Squat (KB)", "sets": "3x10/10", "target_kg": null, "notes": "2x16kg KBs" },
+          { "id": "rdl", "name": "RDL", "sets": "3x10", "target_kg": 66, "target_pct": "55%", "notes": null }
+        ],
+        "core": [
+          { "id": "v-ups", "name": "V Ups", "sets": "3x15" },
+          { "id": "plank", "name": "Plank", "sets": "3x45s" }
+        ],
+        "finisher": {
+          "name": "KB Swings + Burpees",
+          "rounds": 5,
+          "details": "10 swings (24kg) + 5 burpees"
+        }
+      },
+      "2026-01-06": {
+        "day": "Tuesday",
+        "type": "HIIT + Mobility",
+        "warmup": "Easy 5 min",
+        "exercises": [
+          { "id": "bike-sprints", "name": "Bike Sprints", "sets": "10x30s on/30s off", "target_kg": null, "notes": "All out" },
+          { "id": "row-intervals", "name": "Row Intervals", "sets": "6x200m", "target_kg": null, "notes": "Fast pace" }
+        ],
+        "core": [],
+        "finisher": null,
+        "mobility": {
+          "name": "Ankle Mobility",
+          "duration": "10 min"
+        }
+      },
+      "2026-01-07": {
+        "day": "Wednesday",
+        "type": "Upper Body",
+        "warmup": "Band pull-aparts + scap push-ups (10 min)",
+        "exercises": [
+          { "id": "bench-press", "name": "Bench Press", "sets": "3x10", "target_kg": 50, "target_pct": "55%", "notes": null },
+          { "id": "one-arm-row", "name": "1-Arm DB Row", "sets": "3x12/12", "target_kg": 24, "notes": null },
+          { "id": "face-pull", "name": "Face Pull", "sets": "3x15", "target_kg": 30, "notes": null },
+          { "id": "pull-ups", "name": "Pull-ups", "sets": "3x8-10", "target_kg": null, "notes": "Bodyweight" }
+        ],
+        "core": [
+          { "id": "v-ups", "name": "V Ups", "sets": "3x15" },
+          { "id": "pallof-press", "name": "Pallof Press", "sets": "3x12", "target_kg": 30 }
+        ],
+        "finisher": {
+          "name": "Sled Push + Air Bike + Burpees",
+          "rounds": 5,
+          "details": "20m sled (60kg) + 10 cal bike + 5 burpees"
+        }
+      },
+      "2026-01-08": {
+        "day": "Thursday",
+        "type": "Cardio + Recovery",
+        "warmup": "Inch Worms 2x10, Glute Bridge 2x15",
+        "exercises": [
+          { "id": "rower-zone2", "name": "Rower (Zone 2)", "sets": "40 min", "target_kg": null, "notes": "8413m" }
+        ],
+        "core": [],
+        "finisher": null,
+        "mobility": {
+          "name": "Full Mobility",
+          "duration": "15 min",
+          "details": "Ankle Circles + Band Stretches, Hip 90/90 + Pigeon, Thoracic Rotations"
+        }
+      },
       "2026-01-09": {
         "day": "Friday",
         "type": "Lower Unilateral",
         "warmup": "Skipping + lunges (10 min)",
         "exercises": [
-          { "id": "front-squat", "name": "Front Squat", "sets": "3x8", "target_kg": 66, "target_pct": "55%", "notes": "Felt light - go higher next time" },
+          { "id": "front-squat", "name": "Front Squat", "sets": "3x8", "target_kg": 66, "target_pct": "55%", "notes": null },
           { "id": "broad-jumps", "name": "Broad Jumps", "sets": "4x5", "target_kg": null, "notes": "Max distance" },
           { "id": "explosive-stepups", "name": "Explosive Step-ups (KB)", "sets": "3x6/6", "target_kg": 40, "notes": "2x20kg KBs" },
           { "id": "single-leg-rdl", "name": "Single-leg RDL (KB)", "sets": "3x10/10", "target_kg": 20, "notes": null },
           { "id": "hip-thrust", "name": "Hip Thrust", "sets": "3x12", "target_kg": 40, "notes": null }
         ],
         "core": [
-          { "id": "v-ups", "name": "V Ups", "sets": "3x15", "target_kg": null },
-          { "id": "side-plank", "name": "Side Plank", "sets": "3x30s/side", "target_kg": null }
+          { "id": "v-ups", "name": "V Ups", "sets": "3x15" },
+          { "id": "side-plank", "name": "Side Plank", "sets": "3x30s/side" }
         ],
         "finisher": {
           "name": "Rower + KB Swings + Box Jumps",
@@ -74,8 +224,8 @@
           { "id": "rdl", "name": "RDL", "sets": "3x10", "target_kg": 85, "notes": null }
         ],
         "core": [
-          { "id": "v-ups", "name": "V Ups", "sets": "3x15", "target_kg": null },
-          { "id": "plank", "name": "Plank", "sets": "3x45s", "target_kg": null }
+          { "id": "v-ups", "name": "V Ups", "sets": "3x15" },
+          { "id": "plank", "name": "Plank", "sets": "3x45s" }
         ],
         "finisher": {
           "name": "Sled Push + Burpees + KB Swings",
@@ -109,7 +259,7 @@
           { "id": "pull-ups", "name": "Pull-ups", "sets": "3x8-10", "target_kg": null, "notes": "Bodyweight" }
         ],
         "core": [
-          { "id": "v-ups", "name": "V Ups", "sets": "3x15", "target_kg": null },
+          { "id": "v-ups", "name": "V Ups", "sets": "3x15" },
           { "id": "pallof-press", "name": "Pallof Press", "sets": "3x12", "target_kg": 35 }
         ],
         "finisher": {
@@ -145,8 +295,8 @@
           { "id": "hip-thrust", "name": "Hip Thrust", "sets": "3x12", "target_kg": null, "notes": "Moderate load" }
         ],
         "core": [
-          { "id": "v-ups", "name": "V Ups", "sets": "3x15", "target_kg": null },
-          { "id": "side-plank", "name": "Side Plank", "sets": "3x30s/side", "target_kg": null }
+          { "id": "v-ups", "name": "V Ups", "sets": "3x15" },
+          { "id": "side-plank", "name": "Side Plank", "sets": "3x30s/side" }
         ],
         "finisher": {
           "name": "Rower + KB Swings + Box Jumps",

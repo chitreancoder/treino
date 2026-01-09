@@ -36,7 +36,7 @@ const weekData = weekDates.map(date => {
     dayNum: dateObj.getDate(),
     plan: dayPlan,
     log: dayLog,
-    isToday: date === new Date().toISOString().split('T')[0],
+    isToday: false, // Set client-side
     isCompleted: dayLog?.completed || false,
     exerciseCount: dayPlan?.exercises?.length || 0,
     completedCount: dayLog?.exercises?.filter((e: any) => e.done)?.length || 0
@@ -53,7 +53,7 @@ const weekEnd = new Date(weekDates[6] + 'T00:00:00').toLocaleDateString('en-US',
 <Layout title="Treino - Weekly Overview" activeNav="week">
   <div class="px-4 pt-6 max-w-lg mx-auto">
     <!-- Header -->
-    <header class="mb-8 opacity-0 animate-fade-up">
+    <header class="mb-8 animate-fade-up">
       <a href="/" class="inline-flex items-center gap-2 text-sm text-[var(--color-text-muted)] hover:text-lime transition-colors mb-4">
         <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
           <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7" />
@@ -81,9 +81,10 @@ const weekEnd = new Date(weekDates[6] + 'T00:00:00').toLocaleDateString('en-US',
       {weekData.map((day, i) => (
         <a
           href={day.plan ? `/day/${day.date}` : '#'}
+          data-date={day.date}
           class={`
-            block p-4 rounded-xl border transition-all duration-200 opacity-0 animate-fade-up
-            ${day.isToday ? 'border-lime bg-[var(--color-lime)]/5' : 'border-[var(--color-border)] bg-[var(--color-card)]'}
+            week-day-row block p-4 rounded-xl border transition-all duration-200 animate-fade-up
+            border-[var(--color-border)] bg-[var(--color-card)]
             ${day.plan ? 'hover:border-lime cursor-pointer' : 'opacity-50 cursor-default'}
             stagger-${i + 1}
           `}
@@ -91,7 +92,7 @@ const weekEnd = new Date(weekDates[6] + 'T00:00:00').toLocaleDateString('en-US',
           <div class="flex items-center justify-between">
             <!-- Day info -->
             <div class="flex items-center gap-4">
-              <div class={`w-12 h-12 rounded-lg flex flex-col items-center justify-center ${day.isToday ? 'bg-lime text-black' : 'bg-[var(--color-bg)]'}`}>
+              <div class="day-badge w-12 h-12 rounded-lg flex flex-col items-center justify-center bg-[var(--color-bg)]">
                 <span class="text-xs font-mono">{day.dayName}</span>
                 <span class="text-lg font-display">{day.dayNum}</span>
               </div>
@@ -109,7 +110,7 @@ const weekEnd = new Date(weekDates[6] + 'T00:00:00').toLocaleDateString('en-US',
             </div>
 
             <!-- Status -->
-            <div class="flex items-center gap-2">
+            <div class="day-status flex items-center gap-2">
               {day.isCompleted && (
                 <div class="w-8 h-8 rounded-full bg-lime flex items-center justify-center">
                   <svg class="w-5 h-5 text-black" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -118,16 +119,10 @@ const weekEnd = new Date(weekDates[6] + 'T00:00:00').toLocaleDateString('en-US',
                 </div>
               )}
               {!day.isCompleted && day.plan && day.plan.type !== 'Rest Day' && (
-                <div class="flex items-center gap-1">
-                  {day.isToday && (
-                    <span class="px-2 py-0.5 rounded text-xs font-mono bg-[var(--color-amber)] text-black">NOW</span>
-                  )}
-                  {!day.isToday && new Date(day.date) < new Date() && (
-                    <span class="px-2 py-0.5 rounded text-xs font-mono bg-[var(--color-red)]/20 text-[var(--color-red)]">MISSED</span>
-                  )}
-                  {new Date(day.date) > new Date() && (
-                    <span class="px-2 py-0.5 rounded text-xs font-mono bg-[var(--color-card)] text-[var(--color-text-muted)]">UPCOMING</span>
-                  )}
+                <div class="status-badge flex items-center gap-1" data-completed={day.isCompleted}>
+                  <span class="now-badge hidden px-2 py-0.5 rounded text-xs font-mono bg-[var(--color-amber)] text-black">NOW</span>
+                  <span class="missed-badge hidden px-2 py-0.5 rounded text-xs font-mono bg-[var(--color-red)]/20 text-[var(--color-red)]">MISSED</span>
+                  <span class="upcoming-badge hidden px-2 py-0.5 rounded text-xs font-mono bg-[var(--color-card)] text-[var(--color-text-muted)]">UPCOMING</span>
                 </div>
               )}
               {day.plan?.type === 'Rest Day' && (
@@ -159,4 +154,45 @@ const weekEnd = new Date(weekDates[6] + 'T00:00:00').toLocaleDateString('en-US',
       </p>
     </footer>
   </div>
+
+  <script>
+    // Client-side: detect today and update UI
+    const userToday = new Date().toLocaleDateString('en-CA');
+    const now = new Date();
+
+    document.querySelectorAll('.week-day-row').forEach(row => {
+      const date = row.getAttribute('data-date');
+      if (!date) return;
+
+      const rowDate = new Date(date + 'T12:00:00');
+      const badge = row.querySelector('.day-badge');
+      const statusBadge = row.querySelector('.status-badge');
+
+      if (date === userToday) {
+        // This is today
+        row.classList.add('border-lime');
+        row.style.background = 'rgba(191, 255, 0, 0.05)';
+        if (badge) {
+          badge.classList.remove('bg-[var(--color-bg)]');
+          badge.classList.add('bg-lime', 'text-black');
+        }
+        if (statusBadge) {
+          const nowBadge = statusBadge.querySelector('.now-badge');
+          if (nowBadge) nowBadge.classList.remove('hidden');
+        }
+      } else if (rowDate < now) {
+        // Past day (missed)
+        if (statusBadge && statusBadge.dataset.completed !== 'true') {
+          const missedBadge = statusBadge.querySelector('.missed-badge');
+          if (missedBadge) missedBadge.classList.remove('hidden');
+        }
+      } else {
+        // Future day
+        if (statusBadge) {
+          const upcomingBadge = statusBadge.querySelector('.upcoming-badge');
+          if (upcomingBadge) upcomingBadge.classList.remove('hidden');
+        }
+      }
+    });
+  </script>
 </Layout>

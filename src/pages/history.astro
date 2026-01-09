@@ -42,7 +42,7 @@ const totalExercises = sessions.reduce((sum, s) => sum + s.completedCount, 0);
 <Layout title="Treino - Session History" activeNav="history">
   <div class="px-4 pt-6 max-w-lg mx-auto">
     <!-- Header -->
-    <header class="mb-8 opacity-0 animate-fade-up">
+    <header class="mb-8 animate-fade-up">
       <a href="/" class="inline-flex items-center gap-2 text-sm text-[var(--color-text-muted)] hover:text-lime transition-colors mb-4">
         <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
           <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7" />
@@ -61,7 +61,7 @@ const totalExercises = sessions.reduce((sum, s) => sum + s.completedCount, 0);
         {sessions.map((session, i) => (
           <a
             href={`/day/${session.date}`}
-            class={`block p-4 rounded-xl border border-[var(--color-border)] bg-[var(--color-card)] hover:border-lime transition-all duration-200 opacity-0 animate-fade-up stagger-${Math.min(i + 1, 8)}`}
+            class={`block p-4 rounded-xl border border-[var(--color-border)] bg-[var(--color-card)] hover:border-lime transition-all duration-200 animate-fade-up stagger-${Math.min(i + 1, 8)}`}
           >
             <!-- Header -->
             <div class="flex items-center justify-between mb-3">

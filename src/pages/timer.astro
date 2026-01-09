@@ -1,0 +1,697 @@
+---
+import Layout from '../layouts/Layout.astro';
+---
+
+<Layout title="Treino - Timer" activeNav="timer">
+  <div class="px-4 pt-6 max-w-lg mx-auto">
+    <!-- Header -->
+    <header class="mb-6 animate-fade-up">
+      <h1 class="font-display text-4xl text-[var(--color-text)]">TIMER</h1>
+      <p class="font-mono text-sm text-[var(--color-text-muted)]">Workout timers</p>
+    </header>
+
+    <!-- Mode Selector -->
+    <div class="flex flex-wrap gap-2 mb-6 animate-fade-up stagger-1" id="mode-selector">
+      <button data-mode="stopwatch" class="mode-btn active px-3 py-1.5 rounded-full font-mono text-xs border border-[var(--color-border)] bg-[var(--color-card)] transition-all">
+        FOR TIME
+      </button>
+      <button data-mode="countdown" class="mode-btn px-3 py-1.5 rounded-full font-mono text-xs border border-[var(--color-border)] bg-[var(--color-card)] transition-all">
+        AMRAP
+      </button>
+      <button data-mode="emom" class="mode-btn px-3 py-1.5 rounded-full font-mono text-xs border border-[var(--color-border)] bg-[var(--color-card)] transition-all">
+        EMOM
+      </button>
+      <button data-mode="tabata" class="mode-btn px-3 py-1.5 rounded-full font-mono text-xs border border-[var(--color-border)] bg-[var(--color-card)] transition-all">
+        TABATA
+      </button>
+      <button data-mode="interval" class="mode-btn px-3 py-1.5 rounded-full font-mono text-xs border border-[var(--color-border)] bg-[var(--color-card)] transition-all">
+        INTERVAL
+      </button>
+      <button data-mode="rest" class="mode-btn px-3 py-1.5 rounded-full font-mono text-xs border border-[var(--color-border)] bg-[var(--color-card)] transition-all">
+        REST
+      </button>
+    </div>
+
+    <!-- Timer Display -->
+    <div id="timer-container" class="animate-fade-up stagger-2">
+      <!-- Main Timer Display -->
+      <div id="timer-display" class="relative rounded-2xl border border-[var(--color-border)] bg-[var(--color-card)] p-8 mb-6 transition-colors duration-300">
+        <!-- Phase indicator -->
+        <div id="phase-indicator" class="absolute top-4 left-4 px-2 py-1 rounded text-xs font-mono hidden">
+          WORK
+        </div>
+
+        <!-- Time -->
+        <div class="text-center">
+          <div id="timer-time" class="font-mono text-7xl md:text-8xl font-bold text-[var(--color-text)] tabular-nums tracking-tight">
+            00:00
+          </div>
+          <div id="timer-ms" class="font-mono text-2xl text-[var(--color-text-muted)] tabular-nums">
+            .00
+          </div>
+        </div>
+
+        <!-- Round info -->
+        <div id="round-info" class="text-center mt-4 hidden">
+          <span class="font-mono text-sm text-[var(--color-text-muted)]">
+            Round <span id="current-round">1</span> of <span id="total-rounds">8</span>
+          </span>
+          <!-- Progress bar -->
+          <div class="mt-2 h-1.5 bg-[var(--color-bg)] rounded-full overflow-hidden">
+            <div id="round-progress" class="h-full bg-lime rounded-full transition-all duration-300" style="width: 0%"></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Config Panel -->
+      <div id="config-panel" class="mb-6 space-y-4">
+        <!-- Stopwatch config (default - no config needed) -->
+        <div id="config-stopwatch" class="config-section">
+          <p class="text-sm text-[var(--color-text-muted)] text-center">Count up - no setup needed</p>
+        </div>
+
+        <!-- Countdown/AMRAP config -->
+        <div id="config-countdown" class="config-section hidden">
+          <label class="block mb-2">
+            <span class="font-mono text-xs text-[var(--color-text-muted)]">TIME (minutes)</span>
+            <input type="number" id="countdown-minutes" value="12" min="1" max="60"
+              class="w-full mt-1 px-4 py-3 rounded-xl bg-[var(--color-bg)] border border-[var(--color-border)] font-mono text-lg text-[var(--color-text)] focus:border-lime focus:outline-none">
+          </label>
+        </div>
+
+        <!-- EMOM config -->
+        <div id="config-emom" class="config-section hidden">
+          <label class="block mb-2">
+            <span class="font-mono text-xs text-[var(--color-text-muted)]">MINUTES</span>
+            <input type="number" id="emom-minutes" value="10" min="1" max="60"
+              class="w-full mt-1 px-4 py-3 rounded-xl bg-[var(--color-bg)] border border-[var(--color-border)] font-mono text-lg text-[var(--color-text)] focus:border-lime focus:outline-none">
+          </label>
+        </div>
+
+        <!-- Tabata config -->
+        <div id="config-tabata" class="config-section hidden">
+          <div class="grid grid-cols-3 gap-3">
+            <label class="block">
+              <span class="font-mono text-xs text-[var(--color-text-muted)]">WORK (s)</span>
+              <input type="number" id="tabata-work" value="20" min="5" max="120"
+                class="w-full mt-1 px-3 py-3 rounded-xl bg-[var(--color-bg)] border border-[var(--color-border)] font-mono text-lg text-[var(--color-text)] focus:border-lime focus:outline-none">
+            </label>
+            <label class="block">
+              <span class="font-mono text-xs text-[var(--color-text-muted)]">REST (s)</span>
+              <input type="number" id="tabata-rest" value="10" min="5" max="120"
+                class="w-full mt-1 px-3 py-3 rounded-xl bg-[var(--color-bg)] border border-[var(--color-border)] font-mono text-lg text-[var(--color-text)] focus:border-lime focus:outline-none">
+            </label>
+            <label class="block">
+              <span class="font-mono text-xs text-[var(--color-text-muted)]">ROUNDS</span>
+              <input type="number" id="tabata-rounds" value="8" min="1" max="30"
+                class="w-full mt-1 px-3 py-3 rounded-xl bg-[var(--color-bg)] border border-[var(--color-border)] font-mono text-lg text-[var(--color-text)] focus:border-lime focus:outline-none">
+            </label>
+          </div>
+        </div>
+
+        <!-- Interval config -->
+        <div id="config-interval" class="config-section hidden">
+          <div class="grid grid-cols-3 gap-3">
+            <label class="block">
+              <span class="font-mono text-xs text-[var(--color-text-muted)]">WORK (s)</span>
+              <input type="number" id="interval-work" value="40" min="5" max="300"
+                class="w-full mt-1 px-3 py-3 rounded-xl bg-[var(--color-bg)] border border-[var(--color-border)] font-mono text-lg text-[var(--color-text)] focus:border-lime focus:outline-none">
+            </label>
+            <label class="block">
+              <span class="font-mono text-xs text-[var(--color-text-muted)]">REST (s)</span>
+              <input type="number" id="interval-rest" value="20" min="5" max="300"
+                class="w-full mt-1 px-3 py-3 rounded-xl bg-[var(--color-bg)] border border-[var(--color-border)] font-mono text-lg text-[var(--color-text)] focus:border-lime focus:outline-none">
+            </label>
+            <label class="block">
+              <span class="font-mono text-xs text-[var(--color-text-muted)]">ROUNDS</span>
+              <input type="number" id="interval-rounds" value="5" min="1" max="30"
+                class="w-full mt-1 px-3 py-3 rounded-xl bg-[var(--color-bg)] border border-[var(--color-border)] font-mono text-lg text-[var(--color-text)] focus:border-lime focus:outline-none">
+            </label>
+          </div>
+        </div>
+
+        <!-- Rest config -->
+        <div id="config-rest" class="config-section hidden">
+          <p class="font-mono text-xs text-[var(--color-text-muted)] mb-3">QUICK PRESETS</p>
+          <div class="grid grid-cols-5 gap-2">
+            <button data-rest="30" class="rest-preset px-3 py-3 rounded-xl bg-[var(--color-bg)] border border-[var(--color-border)] font-mono text-sm text-[var(--color-text)] hover:border-lime transition-colors">
+              30s
+            </button>
+            <button data-rest="60" class="rest-preset px-3 py-3 rounded-xl bg-[var(--color-bg)] border border-[var(--color-border)] font-mono text-sm text-[var(--color-text)] hover:border-lime transition-colors">
+              1m
+            </button>
+            <button data-rest="90" class="rest-preset px-3 py-3 rounded-xl bg-[var(--color-bg)] border border-[var(--color-border)] font-mono text-sm text-[var(--color-text)] hover:border-lime transition-colors">
+              90s
+            </button>
+            <button data-rest="120" class="rest-preset px-3 py-3 rounded-xl bg-[var(--color-bg)] border border-[var(--color-border)] font-mono text-sm text-[var(--color-text)] hover:border-lime transition-colors">
+              2m
+            </button>
+            <button data-rest="180" class="rest-preset px-3 py-3 rounded-xl bg-[var(--color-bg)] border border-[var(--color-border)] font-mono text-sm text-[var(--color-text)] hover:border-lime transition-colors">
+              3m
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Controls -->
+      <div class="flex gap-3 animate-fade-up stagger-3">
+        <button id="btn-start" class="flex-1 py-4 rounded-xl bg-lime text-black font-mono font-bold text-lg transition-all hover:brightness-110 active:scale-95">
+          START
+        </button>
+        <button id="btn-reset" class="w-16 py-4 rounded-xl bg-[var(--color-card)] border border-[var(--color-border)] font-mono text-[var(--color-text)] transition-all hover:border-lime">
+          <svg class="w-6 h-6 mx-auto" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15" />
+          </svg>
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <style>
+    .mode-btn.active {
+      background-color: var(--color-lime);
+      color: black;
+      border-color: var(--color-lime);
+    }
+
+    .timer-work {
+      background: linear-gradient(135deg, rgba(34, 197, 94, 0.15) 0%, rgba(34, 197, 94, 0.05) 100%);
+      border-color: rgba(34, 197, 94, 0.5);
+    }
+
+    .timer-rest {
+      background: linear-gradient(135deg, rgba(239, 68, 68, 0.15) 0%, rgba(239, 68, 68, 0.05) 100%);
+      border-color: rgba(239, 68, 68, 0.5);
+    }
+
+    .timer-complete {
+      background: linear-gradient(135deg, rgba(191, 255, 0, 0.2) 0%, rgba(191, 255, 0, 0.05) 100%);
+      border-color: var(--color-lime);
+    }
+
+    .timer-paused {
+      animation: pulse-border 1.5s ease-in-out infinite;
+    }
+
+    @keyframes pulse-border {
+      0%, 100% { border-color: var(--color-amber); }
+      50% { border-color: transparent; }
+    }
+
+    #timer-time {
+      text-shadow: 0 0 40px rgba(191, 255, 0, 0.2);
+    }
+
+    input[type="number"]::-webkit-inner-spin-button,
+    input[type="number"]::-webkit-outer-spin-button {
+      opacity: 1;
+    }
+  </style>
+
+  <script>
+    // ===== TIMER STATE =====
+    let state = {
+      mode: 'stopwatch',
+      status: 'idle', // idle, running, paused, complete
+      startTime: 0,
+      elapsed: 0,
+      targetTime: 0,
+      currentRound: 1,
+      totalRounds: 1,
+      isWorkPhase: true,
+      workTime: 20,
+      restTime: 10,
+      phaseStartTime: 0,
+      phaseElapsed: 0
+    };
+
+    let intervalId = null;
+    let wakeLock = null;
+    let audioCtx = null;
+
+    // ===== DOM ELEMENTS =====
+    const timerDisplay = document.getElementById('timer-display');
+    const timerTime = document.getElementById('timer-time');
+    const timerMs = document.getElementById('timer-ms');
+    const phaseIndicator = document.getElementById('phase-indicator');
+    const roundInfo = document.getElementById('round-info');
+    const currentRoundEl = document.getElementById('current-round');
+    const totalRoundsEl = document.getElementById('total-rounds');
+    const roundProgress = document.getElementById('round-progress');
+    const btnStart = document.getElementById('btn-start');
+    const btnReset = document.getElementById('btn-reset');
+    const modeBtns = document.querySelectorAll('.mode-btn');
+    const configSections = document.querySelectorAll('.config-section');
+    const restPresets = document.querySelectorAll('.rest-preset');
+
+    // ===== AUDIO SYSTEM =====
+    function initAudio() {
+      if (!audioCtx) {
+        audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+      }
+      if (audioCtx.state === 'suspended') {
+        audioCtx.resume();
+      }
+    }
+
+    function beep(frequency = 800, duration = 100, type = 'sine') {
+      if (!audioCtx) return;
+      const oscillator = audioCtx.createOscillator();
+      const gainNode = audioCtx.createGain();
+
+      oscillator.connect(gainNode);
+      gainNode.connect(audioCtx.destination);
+
+      oscillator.frequency.value = frequency;
+      oscillator.type = type;
+      gainNode.gain.setValueAtTime(0.3, audioCtx.currentTime);
+      gainNode.gain.exponentialRampToValueAtTime(0.001, audioCtx.currentTime + duration / 1000);
+
+      oscillator.start(audioCtx.currentTime);
+      oscillator.stop(audioCtx.currentTime + duration / 1000);
+    }
+
+    function beepCountdown() { beep(600, 80); }
+    function beepHalfway() { beep(800, 150); setTimeout(() => beep(800, 150), 200); }
+    function beepOneMinute() { beep(500, 300); }
+    function beepPhaseChange() { beep(1000, 200); }
+    function beepComplete() {
+      beep(800, 150);
+      setTimeout(() => beep(1000, 150), 200);
+      setTimeout(() => beep(1200, 300), 400);
+    }
+
+    // ===== WAKE LOCK =====
+    async function requestWakeLock() {
+      try {
+        if ('wakeLock' in navigator) {
+          wakeLock = await navigator.wakeLock.request('screen');
+        }
+      } catch (err) {
+        console.log('Wake Lock error:', err);
+      }
+    }
+
+    function releaseWakeLock() {
+      if (wakeLock) {
+        wakeLock.release();
+        wakeLock = null;
+      }
+    }
+
+    // ===== FORMAT TIME =====
+    function formatTime(ms) {
+      const totalSeconds = Math.floor(ms / 1000);
+      const minutes = Math.floor(totalSeconds / 60);
+      const seconds = totalSeconds % 60;
+      return `${String(minutes).padStart(2, '0')}:${String(seconds).padStart(2, '0')}`;
+    }
+
+    function formatMs(ms) {
+      const centiseconds = Math.floor((ms % 1000) / 10);
+      return `.${String(centiseconds).padStart(2, '0')}`;
+    }
+
+    // ===== UPDATE DISPLAY =====
+    function updateDisplay() {
+      let displayTime;
+      let displayMs;
+
+      if (state.mode === 'stopwatch') {
+        displayTime = state.elapsed;
+      } else if (state.mode === 'countdown' || state.mode === 'emom') {
+        displayTime = Math.max(0, state.targetTime - state.elapsed);
+      } else if (state.mode === 'tabata' || state.mode === 'interval') {
+        const phaseDuration = state.isWorkPhase ? state.workTime * 1000 : state.restTime * 1000;
+        displayTime = Math.max(0, phaseDuration - state.phaseElapsed);
+      } else if (state.mode === 'rest') {
+        displayTime = Math.max(0, state.targetTime - state.elapsed);
+      }
+
+      timerTime.textContent = formatTime(displayTime);
+      timerMs.textContent = formatMs(displayTime);
+
+      // Update round progress for interval modes
+      if (state.mode === 'tabata' || state.mode === 'interval') {
+        const phaseDuration = state.isWorkPhase ? state.workTime * 1000 : state.restTime * 1000;
+        const progress = (state.phaseElapsed / phaseDuration) * 100;
+        roundProgress.style.width = `${Math.min(100, progress)}%`;
+      }
+    }
+
+    // ===== TIMER TICK =====
+    let lastCountdownBeep = -1;
+    let halfwayBeeped = false;
+    let oneMinuteBeeped = false;
+
+    function tick() {
+      const now = performance.now();
+      state.elapsed = now - state.startTime;
+
+      // For interval modes, track phase elapsed
+      if (state.mode === 'tabata' || state.mode === 'interval') {
+        state.phaseElapsed = now - state.phaseStartTime;
+        const phaseDuration = state.isWorkPhase ? state.workTime * 1000 : state.restTime * 1000;
+        const remaining = phaseDuration - state.phaseElapsed;
+        const totalPhaseTime = (state.workTime + state.restTime) * state.totalRounds * 1000;
+
+        // 3-2-1 countdown for phase
+        const secondsLeft = Math.ceil(remaining / 1000);
+        if (secondsLeft <= 3 && secondsLeft > 0 && secondsLeft !== lastCountdownBeep) {
+          beepCountdown();
+          lastCountdownBeep = secondsLeft;
+        }
+
+        // Phase complete
+        if (state.phaseElapsed >= phaseDuration) {
+          if (state.isWorkPhase) {
+            // Work -> Rest
+            state.isWorkPhase = false;
+            state.phaseStartTime = now;
+            state.phaseElapsed = 0;
+            beepPhaseChange();
+            updatePhaseIndicator();
+          } else {
+            // Rest -> Next round or complete
+            state.currentRound++;
+            if (state.currentRound > state.totalRounds) {
+              complete();
+              return;
+            }
+            state.isWorkPhase = true;
+            state.phaseStartTime = now;
+            state.phaseElapsed = 0;
+            beepPhaseChange();
+            updatePhaseIndicator();
+            currentRoundEl.textContent = state.currentRound;
+          }
+          lastCountdownBeep = -1;
+          halfwayBeeped = false;
+        }
+
+        // Halfway beep for phase
+        if (!halfwayBeeped && state.phaseElapsed >= phaseDuration / 2) {
+          beepHalfway();
+          halfwayBeeped = true;
+        }
+      }
+
+      // Countdown modes (countdown, emom, rest)
+      if (state.mode === 'countdown' || state.mode === 'rest') {
+        const remaining = state.targetTime - state.elapsed;
+
+        // 3-2-1 countdown
+        const secondsLeft = Math.ceil(remaining / 1000);
+        if (secondsLeft <= 3 && secondsLeft > 0 && secondsLeft !== lastCountdownBeep) {
+          beepCountdown();
+          lastCountdownBeep = secondsLeft;
+        }
+
+        // 1 minute warning
+        if (!oneMinuteBeeped && remaining <= 60000 && remaining > 59000 && state.targetTime > 120000) {
+          beepOneMinute();
+          oneMinuteBeeped = true;
+        }
+
+        // Halfway beep
+        if (!halfwayBeeped && state.elapsed >= state.targetTime / 2) {
+          beepHalfway();
+          halfwayBeeped = true;
+        }
+
+        // Complete
+        if (state.elapsed >= state.targetTime) {
+          complete();
+          return;
+        }
+      }
+
+      // EMOM mode
+      if (state.mode === 'emom') {
+        const remaining = state.targetTime - state.elapsed;
+        const currentMinute = Math.floor(state.elapsed / 60000) + 1;
+        const timeInMinute = state.elapsed % 60000;
+
+        // Beep at start of each minute
+        if (timeInMinute < 100 && currentMinute > 1) {
+          beepPhaseChange();
+        }
+
+        // Update round display
+        currentRoundEl.textContent = currentMinute;
+        const minuteProgress = (timeInMinute / 60000) * 100;
+        roundProgress.style.width = `${minuteProgress}%`;
+
+        // 3-2-1 countdown for each minute
+        const secondsLeftInMinute = Math.ceil((60000 - timeInMinute) / 1000);
+        if (secondsLeftInMinute <= 3 && secondsLeftInMinute > 0 && secondsLeftInMinute !== lastCountdownBeep) {
+          beepCountdown();
+          lastCountdownBeep = secondsLeftInMinute;
+        } else if (secondsLeftInMinute > 3) {
+          lastCountdownBeep = -1;
+        }
+
+        // Complete
+        if (state.elapsed >= state.targetTime) {
+          complete();
+          return;
+        }
+      }
+
+      updateDisplay();
+    }
+
+    // ===== PHASE INDICATOR =====
+    function updatePhaseIndicator() {
+      if (state.mode === 'tabata' || state.mode === 'interval') {
+        phaseIndicator.classList.remove('hidden');
+        if (state.isWorkPhase) {
+          phaseIndicator.textContent = 'WORK';
+          phaseIndicator.className = 'absolute top-4 left-4 px-2 py-1 rounded text-xs font-mono font-bold bg-green-500/20 text-green-400';
+          timerDisplay.classList.remove('timer-rest');
+          timerDisplay.classList.add('timer-work');
+        } else {
+          phaseIndicator.textContent = 'REST';
+          phaseIndicator.className = 'absolute top-4 left-4 px-2 py-1 rounded text-xs font-mono font-bold bg-red-500/20 text-red-400';
+          timerDisplay.classList.remove('timer-work');
+          timerDisplay.classList.add('timer-rest');
+        }
+      } else {
+        phaseIndicator.classList.add('hidden');
+        timerDisplay.classList.remove('timer-work', 'timer-rest');
+      }
+    }
+
+    // ===== START/PAUSE =====
+    function start() {
+      initAudio();
+
+      if (state.status === 'idle') {
+        // Fresh start
+        setupMode();
+        state.startTime = performance.now();
+        state.phaseStartTime = state.startTime;
+        state.status = 'running';
+        requestWakeLock();
+      } else if (state.status === 'paused') {
+        // Resume
+        const pausedElapsed = state.elapsed;
+        const pausedPhaseElapsed = state.phaseElapsed;
+        state.startTime = performance.now() - pausedElapsed;
+        state.phaseStartTime = performance.now() - pausedPhaseElapsed;
+        state.status = 'running';
+        requestWakeLock();
+      } else if (state.status === 'running') {
+        // Pause
+        state.status = 'paused';
+        releaseWakeLock();
+      }
+
+      updateUI();
+
+      if (state.status === 'running') {
+        intervalId = setInterval(tick, 50);
+      } else {
+        clearInterval(intervalId);
+      }
+    }
+
+    // ===== RESET =====
+    function reset() {
+      clearInterval(intervalId);
+      releaseWakeLock();
+
+      state.status = 'idle';
+      state.elapsed = 0;
+      state.phaseElapsed = 0;
+      state.currentRound = 1;
+      state.isWorkPhase = true;
+      lastCountdownBeep = -1;
+      halfwayBeeped = false;
+      oneMinuteBeeped = false;
+
+      timerDisplay.classList.remove('timer-work', 'timer-rest', 'timer-complete', 'timer-paused');
+      phaseIndicator.classList.add('hidden');
+
+      setupMode();
+      updateDisplay();
+      updateUI();
+    }
+
+    // ===== COMPLETE =====
+    function complete() {
+      clearInterval(intervalId);
+      state.status = 'complete';
+      beepComplete();
+      releaseWakeLock();
+
+      timerDisplay.classList.remove('timer-work', 'timer-rest');
+      timerDisplay.classList.add('timer-complete');
+
+      // Vibrate if available
+      if (navigator.vibrate) {
+        navigator.vibrate([200, 100, 200, 100, 400]);
+      }
+
+      updateUI();
+    }
+
+    // ===== SETUP MODE =====
+    function setupMode() {
+      // Reset display state
+      roundInfo.classList.add('hidden');
+      roundProgress.style.width = '0%';
+
+      switch (state.mode) {
+        case 'stopwatch':
+          state.targetTime = 0;
+          break;
+
+        case 'countdown':
+          state.targetTime = parseInt(document.getElementById('countdown-minutes').value) * 60 * 1000;
+          break;
+
+        case 'emom':
+          const emomMins = parseInt(document.getElementById('emom-minutes').value);
+          state.targetTime = emomMins * 60 * 1000;
+          state.totalRounds = emomMins;
+          roundInfo.classList.remove('hidden');
+          currentRoundEl.textContent = '1';
+          totalRoundsEl.textContent = emomMins;
+          break;
+
+        case 'tabata':
+          state.workTime = parseInt(document.getElementById('tabata-work').value);
+          state.restTime = parseInt(document.getElementById('tabata-rest').value);
+          state.totalRounds = parseInt(document.getElementById('tabata-rounds').value);
+          state.currentRound = 1;
+          state.isWorkPhase = true;
+          roundInfo.classList.remove('hidden');
+          currentRoundEl.textContent = '1';
+          totalRoundsEl.textContent = state.totalRounds;
+          updatePhaseIndicator();
+          break;
+
+        case 'interval':
+          state.workTime = parseInt(document.getElementById('interval-work').value);
+          state.restTime = parseInt(document.getElementById('interval-rest').value);
+          state.totalRounds = parseInt(document.getElementById('interval-rounds').value);
+          state.currentRound = 1;
+          state.isWorkPhase = true;
+          roundInfo.classList.remove('hidden');
+          currentRoundEl.textContent = '1';
+          totalRoundsEl.textContent = state.totalRounds;
+          updatePhaseIndicator();
+          break;
+
+        case 'rest':
+          // Will be set by preset buttons
+          break;
+      }
+
+      updateDisplay();
+    }
+
+    // ===== UPDATE UI =====
+    function updateUI() {
+      // Update start button
+      if (state.status === 'running') {
+        btnStart.textContent = 'PAUSE';
+        btnStart.classList.remove('bg-lime');
+        btnStart.classList.add('bg-[var(--color-amber)]');
+        timerDisplay.classList.remove('timer-paused');
+      } else if (state.status === 'paused') {
+        btnStart.textContent = 'RESUME';
+        btnStart.classList.remove('bg-[var(--color-amber)]');
+        btnStart.classList.add('bg-lime');
+        timerDisplay.classList.add('timer-paused');
+      } else if (state.status === 'complete') {
+        btnStart.textContent = 'DONE';
+        btnStart.classList.remove('bg-[var(--color-amber)]');
+        btnStart.classList.add('bg-lime');
+        timerDisplay.classList.remove('timer-paused');
+      } else {
+        btnStart.textContent = 'START';
+        btnStart.classList.remove('bg-[var(--color-amber)]');
+        btnStart.classList.add('bg-lime');
+        timerDisplay.classList.remove('timer-paused');
+      }
+    }
+
+    // ===== MODE SWITCHING =====
+    function setMode(mode) {
+      if (state.status !== 'idle') {
+        reset();
+      }
+
+      state.mode = mode;
+
+      // Update mode buttons
+      modeBtns.forEach(btn => {
+        btn.classList.toggle('active', btn.dataset.mode === mode);
+      });
+
+      // Show/hide config sections
+      configSections.forEach(section => {
+        section.classList.add('hidden');
+      });
+      document.getElementById(`config-${mode}`).classList.remove('hidden');
+
+      setupMode();
+    }
+
+    // ===== EVENT LISTENERS =====
+    btnStart.addEventListener('click', () => {
+      if (state.status === 'complete') {
+        reset();
+      } else {
+        start();
+      }
+    });
+
+    btnReset.addEventListener('click', reset);
+
+    modeBtns.forEach(btn => {
+      btn.addEventListener('click', () => setMode(btn.dataset.mode));
+    });
+
+    restPresets.forEach(btn => {
+      btn.addEventListener('click', () => {
+        const seconds = parseInt(btn.dataset.rest);
+        state.targetTime = seconds * 1000;
+        state.mode = 'rest';
+
+        // Highlight selected preset
+        restPresets.forEach(b => b.classList.remove('border-lime', 'bg-lime/10'));
+        btn.classList.add('border-lime', 'bg-lime/10');
+
+        updateDisplay();
+        start();
+      });
+    });
+
+    // Initialize
+    setupMode();
+    updateDisplay();
+  </script>
+</Layout>

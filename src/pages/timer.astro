@@ -72,20 +72,34 @@ import Layout from '../layouts/Layout.astro';
 
         <!-- Countdown/AMRAP config -->
         <div id="config-countdown" class="config-section hidden">
-          <label class="block mb-2">
-            <span class="font-mono text-xs text-[var(--color-text-muted)]">TIME (minutes)</span>
-            <input type="number" id="countdown-minutes" value="12" min="1" max="60"
-              class="w-full mt-1 px-4 py-3 rounded-xl bg-[var(--color-bg)] border border-[var(--color-border)] font-mono text-lg text-[var(--color-text)] focus:border-lime focus:outline-none">
-          </label>
+          <div class="grid grid-cols-2 gap-3">
+            <label class="block">
+              <span class="font-mono text-xs text-[var(--color-text-muted)]">MINUTES</span>
+              <input type="number" id="countdown-minutes" value="12" min="0" max="60"
+                class="w-full mt-1 px-4 py-3 rounded-xl bg-[var(--color-bg)] border border-[var(--color-border)] font-mono text-lg text-[var(--color-text)] focus:border-lime focus:outline-none">
+            </label>
+            <label class="block">
+              <span class="font-mono text-xs text-[var(--color-text-muted)]">SECONDS</span>
+              <input type="number" id="countdown-seconds" value="0" min="0" max="59"
+                class="w-full mt-1 px-4 py-3 rounded-xl bg-[var(--color-bg)] border border-[var(--color-border)] font-mono text-lg text-[var(--color-text)] focus:border-lime focus:outline-none">
+            </label>
+          </div>
         </div>
 
         <!-- EMOM config -->
         <div id="config-emom" class="config-section hidden">
-          <label class="block mb-2">
-            <span class="font-mono text-xs text-[var(--color-text-muted)]">MINUTES</span>
-            <input type="number" id="emom-minutes" value="10" min="1" max="60"
-              class="w-full mt-1 px-4 py-3 rounded-xl bg-[var(--color-bg)] border border-[var(--color-border)] font-mono text-lg text-[var(--color-text)] focus:border-lime focus:outline-none">
-          </label>
+          <div class="grid grid-cols-2 gap-3">
+            <label class="block">
+              <span class="font-mono text-xs text-[var(--color-text-muted)]">MINUTES</span>
+              <input type="number" id="emom-minutes" value="10" min="1" max="60"
+                class="w-full mt-1 px-4 py-3 rounded-xl bg-[var(--color-bg)] border border-[var(--color-border)] font-mono text-lg text-[var(--color-text)] focus:border-lime focus:outline-none">
+            </label>
+            <label class="block">
+              <span class="font-mono text-xs text-[var(--color-text-muted)]">SECONDS</span>
+              <input type="number" id="emom-seconds" value="0" min="0" max="59"
+                class="w-full mt-1 px-4 py-3 rounded-xl bg-[var(--color-bg)] border border-[var(--color-border)] font-mono text-lg text-[var(--color-text)] focus:border-lime focus:outline-none">
+            </label>
+          </div>
         </div>
 
         <!-- Tabata config -->
@@ -249,13 +263,31 @@ import Layout from '../layouts/Layout.astro';
       if (!audioCtx) {
         audioCtx = new (window.AudioContext || window.webkitAudioContext)();
       }
+      // iOS Safari requires resume after user gesture
       if (audioCtx.state === 'suspended') {
         audioCtx.resume();
       }
+      // Play a silent sound to unlock audio on iOS
+      const silent = audioCtx.createOscillator();
+      const silentGain = audioCtx.createGain();
+      silentGain.gain.value = 0.001;
+      silent.connect(silentGain);
+      silentGain.connect(audioCtx.destination);
+      silent.start();
+      silent.stop(audioCtx.currentTime + 0.01);
     }
 
-    function beep(frequency = 800, duration = 100, type = 'sine') {
+    function beep(frequency = 800, duration = 150, volume = 0.5) {
+      if (!audioCtx) {
+        initAudio();
+      }
       if (!audioCtx) return;
+
+      // Resume if suspended
+      if (audioCtx.state === 'suspended') {
+        audioCtx.resume();
+      }
+
       const oscillator = audioCtx.createOscillator();
       const gainNode = audioCtx.createGain();
 
@@ -263,23 +295,31 @@ import Layout from '../layouts/Layout.astro';
       gainNode.connect(audioCtx.destination);
 
       oscillator.frequency.value = frequency;
-      oscillator.type = type;
-      gainNode.gain.setValueAtTime(0.3, audioCtx.currentTime);
-      gainNode.gain.exponentialRampToValueAtTime(0.001, audioCtx.currentTime + duration / 1000);
+      oscillator.type = 'sine';
+
+      // Louder volume with smooth envelope
+      gainNode.gain.setValueAtTime(0, audioCtx.currentTime);
+      gainNode.gain.linearRampToValueAtTime(volume, audioCtx.currentTime + 0.01);
+      gainNode.gain.linearRampToValueAtTime(volume * 0.7, audioCtx.currentTime + duration / 2000);
+      gainNode.gain.linearRampToValueAtTime(0, audioCtx.currentTime + duration / 1000);
 
       oscillator.start(audioCtx.currentTime);
-      oscillator.stop(audioCtx.currentTime + duration / 1000);
+      oscillator.stop(audioCtx.currentTime + duration / 1000 + 0.05);
     }
 
-    function beepCountdown() { beep(600, 80); }
-    function beepHalfway() { beep(800, 150); setTimeout(() => beep(800, 150), 200); }
-    function beepOneMinute() { beep(500, 300); }
-    function beepPhaseChange() { beep(1000, 200); }
-    function beepComplete() {
-      beep(800, 150);
-      setTimeout(() => beep(1000, 150), 200);
-      setTimeout(() => beep(1200, 300), 400);
+    function beepCountdown() { beep(880, 100, 0.6); } // Higher pitch, short
+    function beepHalfway() {
+      beep(660, 150, 0.5);
+      setTimeout(() => beep(880, 150, 0.5), 200);
     }
+    function beepOneMinute() { beep(440, 400, 0.5); } // Lower, longer
+    function beepPhaseChange() { beep(1047, 250, 0.6); } // High C
+    function beepComplete() {
+      beep(523, 200, 0.6); // C
+      setTimeout(() => beep(659, 200, 0.6), 250); // E
+      setTimeout(() => beep(784, 400, 0.7), 500); // G
+    }
+    function beepStart() { beep(523, 150, 0.4); } // Confirmation beep on start
 
     // ===== WAKE LOCK =====
     async function requestWakeLock() {
@@ -493,6 +533,8 @@ import Layout from '../layouts/Layout.astro';
         state.phaseStartTime = state.startTime;
         state.status = 'running';
         requestWakeLock();
+        // Confirmation beep
+        beepStart();
       } else if (state.status === 'paused') {
         // Resume
         const pausedElapsed = state.elapsed;
@@ -568,13 +610,16 @@ import Layout from '../layouts/Layout.astro';
           break;
 
         case 'countdown':
-          state.targetTime = parseInt(document.getElementById('countdown-minutes').value) * 60 * 1000;
+          const countdownMins = parseInt(document.getElementById('countdown-minutes').value) || 0;
+          const countdownSecs = parseInt(document.getElementById('countdown-seconds').value) || 0;
+          state.targetTime = (countdownMins * 60 + countdownSecs) * 1000;
           break;
 
         case 'emom':
-          const emomMins = parseInt(document.getElementById('emom-minutes').value);
-          state.targetTime = emomMins * 60 * 1000;
-          state.totalRounds = emomMins;
+          const emomMins = parseInt(document.getElementById('emom-minutes').value) || 0;
+          const emomSecs = parseInt(document.getElementById('emom-seconds').value) || 0;
+          state.targetTime = (emomMins * 60 + emomSecs) * 1000;
+          state.totalRounds = emomMins || 1;
           roundInfo.classList.remove('hidden');
           currentRoundEl.textContent = '1';
           totalRoundsEl.textContent = emomMins;

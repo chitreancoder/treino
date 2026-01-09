@@ -1,0 +1,78 @@
+---
+interface Props {
+  currentDate: string;
+  availableDates: string[];
+}
+
+const { currentDate, availableDates } = Astro.props;
+
+// Get the week containing the current date
+const currentDateObj = new Date(currentDate + 'T00:00:00');
+const dayOfWeek = currentDateObj.getDay(); // 0 = Sunday
+const mondayOffset = dayOfWeek === 0 ? -6 : 1 - dayOfWeek;
+
+// Generate the week's dates (Mon-Sun)
+const weekDates: { date: string; dayLetter: string; isToday: boolean; hasWorkout: boolean; isCurrent: boolean }[] = [];
+for (let i = 0; i < 7; i++) {
+  const d = new Date(currentDateObj);
+  d.setDate(currentDateObj.getDate() + mondayOffset + i);
+  const dateStr = d.toISOString().split('T')[0];
+  const dayLetters = ['M', 'T', 'W', 'T', 'F', 'S', 'S'];
+
+  weekDates.push({
+    date: dateStr,
+    dayLetter: dayLetters[i],
+    isToday: dateStr === new Date().toISOString().split('T')[0],
+    hasWorkout: availableDates.includes(dateStr),
+    isCurrent: dateStr === currentDate
+  });
+}
+
+// Find prev/next available dates
+const sortedDates = [...availableDates].sort();
+const currentIdx = sortedDates.indexOf(currentDate);
+const prevDate = currentIdx > 0 ? sortedDates[currentIdx - 1] : null;
+const nextDate = currentIdx < sortedDates.length - 1 ? sortedDates[currentIdx + 1] : null;
+---
+
+<nav class="flex items-center justify-between mb-6">
+  <!-- Prev arrow -->
+  <a
+    href={prevDate ? `/day/${prevDate}` : '#'}
+    class={`w-10 h-10 rounded-full flex items-center justify-center transition-colors ${prevDate ? 'bg-[var(--color-card)] border border-[var(--color-border)] hover:border-[var(--color-lime)]' : 'opacity-30 pointer-events-none'}`}
+  >
+    <svg class="w-5 h-5 text-[var(--color-text)]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7" />
+    </svg>
+  </a>
+
+  <!-- Week days -->
+  <div class="flex gap-1">
+    {weekDates.map((day) => (
+      <a
+        href={day.hasWorkout ? `/day/${day.date}` : '#'}
+        class={`
+          w-9 h-12 rounded-lg flex flex-col items-center justify-center text-xs font-mono transition-all
+          ${day.isCurrent ? 'bg-lime text-black' : ''}
+          ${!day.isCurrent && day.hasWorkout ? 'bg-[var(--color-card)] border border-[var(--color-border)] hover:border-[var(--color-lime)] text-[var(--color-text)]' : ''}
+          ${!day.isCurrent && !day.hasWorkout ? 'text-[var(--color-text-dim)] pointer-events-none' : ''}
+        `}
+      >
+        <span class="text-[10px] opacity-70">{day.dayLetter}</span>
+        <span class={`font-semibold ${day.isToday && !day.isCurrent ? 'underline decoration-lime' : ''}`}>
+          {new Date(day.date + 'T00:00:00').getDate()}
+        </span>
+      </a>
+    ))}
+  </div>
+
+  <!-- Next arrow -->
+  <a
+    href={nextDate ? `/day/${nextDate}` : '#'}
+    class={`w-10 h-10 rounded-full flex items-center justify-center transition-colors ${nextDate ? 'bg-[var(--color-card)] border border-[var(--color-border)] hover:border-[var(--color-lime)]' : 'opacity-30 pointer-events-none'}`}
+  >
+    <svg class="w-5 h-5 text-[var(--color-text)]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
+    </svg>
+  </a>
+</nav>

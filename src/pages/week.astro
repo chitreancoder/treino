@@ -1,0 +1,162 @@
+---
+import Layout from '../layouts/Layout.astro';
+import plan from '../../data/plan.json';
+import log from '../../data/log.json';
+
+// Get current week dates (Mon-Sun containing today)
+const today = new Date();
+const dayOfWeek = today.getDay();
+const mondayOffset = dayOfWeek === 0 ? -6 : 1 - dayOfWeek;
+const monday = new Date(today);
+monday.setDate(today.getDate() + mondayOffset);
+
+// Generate week dates
+const weekDates: string[] = [];
+for (let i = 0; i < 7; i++) {
+  const d = new Date(monday);
+  d.setDate(monday.getDate() + i);
+  weekDates.push(d.toISOString().split('T')[0]);
+}
+
+// Get plan and log data for each day
+const weekData = weekDates.map(date => {
+  let dayPlan = null;
+  for (const week of Object.values(plan.weeks) as Record<string, any>[]) {
+    if (week[date]) {
+      dayPlan = week[date];
+      break;
+    }
+  }
+  const dayLog = (log as Record<string, any>)[date];
+  const dateObj = new Date(date + 'T00:00:00');
+
+  return {
+    date,
+    dayName: dateObj.toLocaleDateString('en-US', { weekday: 'short' }).toUpperCase(),
+    dayNum: dateObj.getDate(),
+    plan: dayPlan,
+    log: dayLog,
+    isToday: date === new Date().toISOString().split('T')[0],
+    isCompleted: dayLog?.completed || false,
+    exerciseCount: dayPlan?.exercises?.length || 0,
+    completedCount: dayLog?.exercises?.filter((e: any) => e.done)?.length || 0
+  };
+});
+
+// Week stats
+const totalWorkouts = weekData.filter(d => d.plan && d.plan.type !== 'Rest Day').length;
+const completedWorkouts = weekData.filter(d => d.isCompleted).length;
+const weekStart = new Date(monday).toLocaleDateString('en-US', { month: 'short', day: 'numeric' });
+const weekEnd = new Date(weekDates[6] + 'T00:00:00').toLocaleDateString('en-US', { month: 'short', day: 'numeric' });
+---
+
+<Layout title="Treino - Weekly Overview" activeNav="week">
+  <div class="px-4 pt-6 max-w-lg mx-auto">
+    <!-- Header -->
+    <header class="mb-8 opacity-0 animate-fade-up">
+      <a href="/" class="inline-flex items-center gap-2 text-sm text-[var(--color-text-muted)] hover:text-lime transition-colors mb-4">
+        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7" />
+        </svg>
+        Today
+      </a>
+
+      <h1 class="font-display text-4xl text-[var(--color-text)]">WEEKLY OVERVIEW</h1>
+      <p class="font-mono text-sm text-[var(--color-text-muted)] mt-1">{weekStart} - {weekEnd}</p>
+
+      <!-- Week progress -->
+      <div class="mt-4 flex items-center gap-4">
+        <div class="flex-1 h-2 bg-[var(--color-card)] rounded-full overflow-hidden">
+          <div
+            class="h-full bg-lime rounded-full transition-all duration-500"
+            style={`width: ${totalWorkouts > 0 ? (completedWorkouts / totalWorkouts) * 100 : 0}%`}
+          ></div>
+        </div>
+        <span class="font-mono text-sm text-[var(--color-text)]">{completedWorkouts}/{totalWorkouts}</span>
+      </div>
+    </header>
+
+    <!-- Days grid -->
+    <div class="space-y-3">
+      {weekData.map((day, i) => (
+        <a
+          href={day.plan ? `/day/${day.date}` : '#'}
+          class={`
+            block p-4 rounded-xl border transition-all duration-200 opacity-0 animate-fade-up
+            ${day.isToday ? 'border-lime bg-[var(--color-lime)]/5' : 'border-[var(--color-border)] bg-[var(--color-card)]'}
+            ${day.plan ? 'hover:border-lime cursor-pointer' : 'opacity-50 cursor-default'}
+            stagger-${i + 1}
+          `}
+        >
+          <div class="flex items-center justify-between">
+            <!-- Day info -->
+            <div class="flex items-center gap-4">
+              <div class={`w-12 h-12 rounded-lg flex flex-col items-center justify-center ${day.isToday ? 'bg-lime text-black' : 'bg-[var(--color-bg)]'}`}>
+                <span class="text-xs font-mono">{day.dayName}</span>
+                <span class="text-lg font-display">{day.dayNum}</span>
+              </div>
+
+              <div>
+                <h3 class={`font-display text-lg ${day.plan ? 'text-[var(--color-text)]' : 'text-[var(--color-text-muted)]'}`}>
+                  {day.plan?.type || 'No Workout'}
+                </h3>
+                {day.plan && day.exerciseCount > 0 && (
+                  <p class="font-mono text-xs text-[var(--color-text-muted)]">
+                    {day.exerciseCount} exercises
+                  </p>
+                )}
+              </div>
+            </div>
+
+            <!-- Status -->
+            <div class="flex items-center gap-2">
+              {day.isCompleted && (
+                <div class="w-8 h-8 rounded-full bg-lime flex items-center justify-center">
+                  <svg class="w-5 h-5 text-black" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M5 13l4 4L19 7" />
+                  </svg>
+                </div>
+              )}
+              {!day.isCompleted && day.plan && day.plan.type !== 'Rest Day' && (
+                <div class="flex items-center gap-1">
+                  {day.isToday && (
+                    <span class="px-2 py-0.5 rounded text-xs font-mono bg-[var(--color-amber)] text-black">NOW</span>
+                  )}
+                  {!day.isToday && new Date(day.date) < new Date() && (
+                    <span class="px-2 py-0.5 rounded text-xs font-mono bg-[var(--color-red)]/20 text-[var(--color-red)]">MISSED</span>
+                  )}
+                  {new Date(day.date) > new Date() && (
+                    <span class="px-2 py-0.5 rounded text-xs font-mono bg-[var(--color-card)] text-[var(--color-text-muted)]">UPCOMING</span>
+                  )}
+                </div>
+              )}
+              {day.plan?.type === 'Rest Day' && (
+                <span class="px-2 py-0.5 rounded text-xs font-mono bg-[var(--color-card)] text-[var(--color-text-dim)]">REST</span>
+              )}
+            </div>
+          </div>
+
+          <!-- Mini progress bar for partially completed -->
+          {day.plan && day.completedCount > 0 && day.completedCount < day.exerciseCount && (
+            <div class="mt-3 flex items-center gap-2">
+              <div class="flex-1 h-1 bg-[var(--color-bg)] rounded-full overflow-hidden">
+                <div
+                  class="h-full bg-lime rounded-full"
+                  style={`width: ${(day.completedCount / day.exerciseCount) * 100}%`}
+                ></div>
+              </div>
+              <span class="font-mono text-xs text-[var(--color-text-dim)]">{day.completedCount}/{day.exerciseCount}</span>
+            </div>
+          )}
+        </a>
+      ))}
+    </div>
+
+    <!-- Footer -->
+    <footer class="text-center py-6 mt-8 border-t border-[var(--color-border)]/50">
+      <p class="font-mono text-xs text-[var(--color-text-dim)]">
+        Updated via Claude • Powered by vibes
+      </p>
+    </footer>
+  </div>
+</Layout>

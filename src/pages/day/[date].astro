@@ -1,17 +1,28 @@
 ---
-import Layout from '../layouts/Layout.astro';
-import ExerciseRow from '../components/ExerciseRow.astro';
-import ClaudeInsight from '../components/ClaudeInsight.astro';
-import SectionHeader from '../components/SectionHeader.astro';
-import FinisherBlock from '../components/FinisherBlock.astro';
-import WeekNav from '../components/WeekNav.astro';
+import Layout from '../../layouts/Layout.astro';
+import ExerciseRow from '../../components/ExerciseRow.astro';
+import ClaudeInsight from '../../components/ClaudeInsight.astro';
+import SectionHeader from '../../components/SectionHeader.astro';
+import FinisherBlock from '../../components/FinisherBlock.astro';
+import WeekNav from '../../components/WeekNav.astro';
 
-// Import data
-import plan from '../../data/plan.json';
-import log from '../../data/log.json';
+import plan from '../../../data/plan.json';
+import log from '../../../data/log.json';
 
-// Get today's date in YYYY-MM-DD format
-const today = new Date().toISOString().split('T')[0];
+export function getStaticPaths() {
+  // Collect all dates from all weeks
+  const allDates: string[] = [];
+  for (const week of Object.values(plan.weeks) as Record<string, any>[]) {
+    allDates.push(...Object.keys(week));
+  }
+
+  return allDates.map(date => ({
+    params: { date },
+    props: { date }
+  }));
+}
+
+const { date } = Astro.props;
 
 // Get all available dates for navigation
 const availableDates: string[] = [];
@@ -19,25 +30,26 @@ for (const week of Object.values(plan.weeks) as Record<string, any>[]) {
   availableDates.push(...Object.keys(week));
 }
 
-// Find today's workout across all weeks in plan
-let todayPlan = null;
+// Find workout for this date
+let dayPlan = null;
 for (const week of Object.values(plan.weeks) as Record<string, any>[]) {
-  if (week[today]) {
-    todayPlan = week[today];
+  if (week[date]) {
+    dayPlan = week[date];
     break;
   }
 }
-const todayLog = (log as Record<string, any>)[today];
+const dayLog = (log as Record<string, any>)[date];
 
 // Format date for display
-const dateObj = new Date(today + 'T00:00:00');
+const dateObj = new Date(date + 'T00:00:00');
 const dayName = dateObj.toLocaleDateString('en-US', { weekday: 'long' }).toUpperCase();
 const dateDisplay = dateObj.toLocaleDateString('en-US', { month: 'short', day: 'numeric' });
+const isToday = date === new Date().toISOString().split('T')[0];
 
 // Helper to find log data for an exercise
 function getExerciseLog(exerciseId: string) {
-  if (!todayLog?.exercises) return null;
-  return todayLog.exercises.find((e: any) => e.id === exerciseId);
+  if (!dayLog?.exercises) return null;
+  return dayLog.exercises.find((e: any) => e.id === exerciseId);
 }
 
 // Helper to get last week's log for the same exercise
@@ -52,21 +64,23 @@ function getLastWeekKg(exerciseId: string): number | null {
 }
 
 // Calculate session stats
-const totalExercises = todayPlan?.exercises?.length || 0;
-const completedExercises = todayLog?.exercises?.filter((e: any) => e.done)?.length || 0;
+const totalExercises = dayPlan?.exercises?.length || 0;
+const completedExercises = dayLog?.exercises?.filter((e: any) => e.done)?.length || 0;
 ---
 
-<Layout title="Treino - Today's Workout">
+<Layout title={`Treino - ${dayName}`}>
   <div class="px-4 pt-6 max-w-lg mx-auto">
     <!-- Week Navigation -->
-    <WeekNav currentDate={today} availableDates={availableDates} />
+    <WeekNav currentDate={date} availableDates={availableDates} />
 
     <!-- Header -->
     <header class="mb-8 opacity-0 animate-fade-up">
       <div class="flex items-center justify-between mb-4">
         <div>
           <div class="flex items-center gap-2">
-            <span class="px-2 py-0.5 rounded text-xs font-mono bg-lime text-black">TODAY</span>
+            {isToday && (
+              <span class="px-2 py-0.5 rounded text-xs font-mono bg-lime text-black">TODAY</span>
+            )}
             <p class="font-mono text-xs text-[var(--color-text-dim)] uppercase tracking-wider">
               {plan.cycle.name}
             </p>
@@ -105,31 +119,31 @@ const completedExercises = todayLog?.exercises?.filter((e: any) => e.done)?.leng
       </div>
 
       <!-- Workout type badge -->
-      {todayPlan && (
+      {dayPlan && (
         <div class="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-[var(--color-card)] border border-[var(--color-border)]">
-          <div class={`w-2 h-2 rounded-full ${todayLog?.completed ? 'bg-lime' : 'bg-[var(--color-amber)]'}`}></div>
-          <span class="font-mono text-sm text-[var(--color-text)]">{todayPlan.type}</span>
+          <div class={`w-2 h-2 rounded-full ${dayLog?.completed ? 'bg-lime' : 'bg-[var(--color-amber)]'}`}></div>
+          <span class="font-mono text-sm text-[var(--color-text)]">{dayPlan.type}</span>
         </div>
       )}
     </header>
 
-    {todayPlan ? (
+    {dayPlan ? (
       <>
         <!-- Warmup -->
-        {todayPlan.warmup && (
+        {dayPlan.warmup && (
           <section class="mb-6 opacity-0 animate-fade-up stagger-1">
             <div class="p-3 rounded-lg bg-[var(--color-card)]/50 border border-[var(--color-border)]/50">
               <span class="font-mono text-xs text-[var(--color-text-dim)] uppercase">Warmup</span>
-              <p class="text-sm text-[var(--color-text-muted)] mt-1">{todayPlan.warmup}</p>
+              <p class="text-sm text-[var(--color-text-muted)] mt-1">{dayPlan.warmup}</p>
             </div>
           </section>
         )}
 
         <!-- Main exercises -->
         <section class="mb-8 opacity-0 animate-fade-up stagger-2">
-          <SectionHeader title="Main Work" subtitle={`${todayPlan.exercises.length} exercises`} />
+          <SectionHeader title="Main Work" subtitle={`${dayPlan.exercises.length} exercises`} />
           <div class="space-y-3">
-            {todayPlan.exercises.map((exercise: any, i: number) => {
+            {dayPlan.exercises.map((exercise: any, i: number) => {
               const exerciseLog = getExerciseLog(exercise.id);
               const lastWeekKg = getLastWeekKg(exercise.id);
               return (
@@ -152,15 +166,15 @@ const completedExercises = todayLog?.exercises?.filter((e: any) => e.done)?.leng
         </section>
 
         <!-- Core -->
-        {todayPlan.core && todayPlan.core.length > 0 && (
+        {dayPlan.core && dayPlan.core.length > 0 && (
           <section class="mb-8 opacity-0 animate-fade-up stagger-6">
             <SectionHeader title="Core" />
             <div class="grid grid-cols-2 gap-3">
-              {todayPlan.core.map((exercise: any) => (
+              {dayPlan.core.map((exercise: any) => (
                 <div class="p-3 rounded-xl bg-[var(--color-card)] border border-[var(--color-border)]">
                   <h4 class="font-display text-base text-[var(--color-text)]">{exercise.name}</h4>
                   <p class="font-mono text-xs text-[var(--color-text-muted)] mt-1">{exercise.sets}</p>
-                  {todayLog?.core_done && (
+                  {dayLog?.core_done && (
                     <div class="mt-2">
                       <span class="inline-flex items-center gap-1 text-xs text-lime">
                         <svg class="w-3 h-3" fill="currentColor" viewBox="0 0 20 20">
@@ -177,46 +191,56 @@ const completedExercises = todayLog?.exercises?.filter((e: any) => e.done)?.leng
         )}
 
         <!-- Finisher -->
-        {todayPlan.finisher && (
+        {dayPlan.finisher && (
           <section class="mb-8 opacity-0 animate-fade-up stagger-7">
             <SectionHeader title="Finisher" />
             <FinisherBlock
-              name={todayPlan.finisher.name}
-              rounds={todayPlan.finisher.rounds}
-              details={todayPlan.finisher.details}
-              done={todayLog?.finisher_done}
-              time={todayLog?.finisher_time}
+              name={dayPlan.finisher.name}
+              rounds={dayPlan.finisher.rounds}
+              details={dayPlan.finisher.details}
+              done={dayLog?.finisher_done}
+              time={dayLog?.finisher_time}
             />
           </section>
         )}
 
         <!-- Mobility (for cardio/recovery days) -->
-        {todayPlan.mobility && (
+        {dayPlan.mobility && (
           <section class="mb-8 opacity-0 animate-fade-up stagger-7">
-            <SectionHeader title="Mobility" subtitle={todayPlan.mobility.duration} />
+            <SectionHeader title="Mobility" subtitle={dayPlan.mobility.duration} />
             <div class="p-4 rounded-xl bg-[var(--color-card)] border border-[var(--color-border)]">
-              <h4 class="font-display text-lg text-[var(--color-text)]">{todayPlan.mobility.name}</h4>
-              {todayPlan.mobility.details && (
-                <p class="text-sm text-[var(--color-text-muted)] mt-2">{todayPlan.mobility.details}</p>
+              <h4 class="font-display text-lg text-[var(--color-text)]">{dayPlan.mobility.name}</h4>
+              {dayPlan.mobility.details && (
+                <p class="text-sm text-[var(--color-text-muted)] mt-2">{dayPlan.mobility.details}</p>
+              )}
+              {dayLog?.mobility_done && (
+                <div class="mt-3">
+                  <span class="inline-flex items-center gap-1 text-xs text-lime">
+                    <svg class="w-3 h-3" fill="currentColor" viewBox="0 0 20 20">
+                      <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd" />
+                    </svg>
+                    Completed
+                  </span>
+                </div>
               )}
             </div>
           </section>
         )}
 
         <!-- Session note -->
-        {todayLog?.session_note && (
+        {dayLog?.session_note && (
           <section class="mb-6 opacity-0 animate-fade-up stagger-8">
             <div class="p-4 rounded-xl bg-[var(--color-card)] border border-[var(--color-border)]">
               <span class="font-mono text-xs text-[var(--color-text-dim)] uppercase">Session Notes</span>
-              <p class="text-sm text-[var(--color-text)] mt-2">"{todayLog.session_note}"</p>
+              <p class="text-sm text-[var(--color-text)] mt-2">"{dayLog.session_note}"</p>
             </div>
           </section>
         )}
 
         <!-- Claude insight -->
-        {todayLog?.claude_insight && (
+        {dayLog?.claude_insight && (
           <section class="mb-8 opacity-0 animate-fade-up stagger-8">
-            <ClaudeInsight insight={todayLog.claude_insight} />
+            <ClaudeInsight insight={dayLog.claude_insight} />
           </section>
         )}
       </>
@@ -229,7 +253,7 @@ const completedExercises = todayLog?.exercises?.filter((e: any) => e.done)?.leng
           </svg>
         </div>
         <h2 class="font-display text-2xl text-[var(--color-text-muted)]">Rest Day</h2>
-        <p class="text-sm text-[var(--color-text-dim)] mt-2">No workout scheduled for today.</p>
+        <p class="text-sm text-[var(--color-text-dim)] mt-2">No workout scheduled for this day.</p>
       </div>
     )}
 

@@ -1,0 +1,144 @@
+---
+import Layout from '../layouts/Layout.astro';
+import ClaudeInsight from '../components/ClaudeInsight.astro';
+import plan from '../../data/plan.json';
+import log from '../../data/log.json';
+
+// Get all logged sessions sorted by date (newest first)
+const sessions = Object.entries(log as Record<string, any>)
+  .map(([date, data]) => {
+    // Find plan for this date
+    let dayPlan = null;
+    for (const week of Object.values(plan.weeks) as Record<string, any>[]) {
+      if (week[date]) {
+        dayPlan = week[date];
+        break;
+      }
+    }
+
+    const dateObj = new Date(date + 'T00:00:00');
+    const exerciseCount = data.exercises?.length || 0;
+    const completedCount = data.exercises?.filter((e: any) => e.done)?.length || 0;
+
+    return {
+      date,
+      dayName: dateObj.toLocaleDateString('en-US', { weekday: 'long' }),
+      dateDisplay: dateObj.toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' }),
+      type: dayPlan?.type || 'Workout',
+      log: data,
+      plan: dayPlan,
+      exerciseCount,
+      completedCount,
+      isFullyCompleted: completedCount === exerciseCount && exerciseCount > 0
+    };
+  })
+  .sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime());
+
+// Stats
+const totalSessions = sessions.length;
+const totalExercises = sessions.reduce((sum, s) => sum + s.completedCount, 0);
+---
+
+<Layout title="Treino - Session History" activeNav="history">
+  <div class="px-4 pt-6 max-w-lg mx-auto">
+    <!-- Header -->
+    <header class="mb-8 opacity-0 animate-fade-up">
+      <a href="/" class="inline-flex items-center gap-2 text-sm text-[var(--color-text-muted)] hover:text-lime transition-colors mb-4">
+        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7" />
+        </svg>
+        Today
+      </a>
+
+      <h1 class="font-display text-4xl text-[var(--color-text)]">SESSION HISTORY</h1>
+      <p class="font-mono text-sm text-[var(--color-text-muted)] mt-1">
+        {totalSessions} sessions • {totalExercises} exercises completed
+      </p>
+    </header>
+
+    {sessions.length > 0 ? (
+      <div class="space-y-4">
+        {sessions.map((session, i) => (
+          <a
+            href={`/day/${session.date}`}
+            class={`block p-4 rounded-xl border border-[var(--color-border)] bg-[var(--color-card)] hover:border-lime transition-all duration-200 opacity-0 animate-fade-up stagger-${Math.min(i + 1, 8)}`}
+          >
+            <!-- Header -->
+            <div class="flex items-center justify-between mb-3">
+              <div>
+                <h3 class="font-display text-xl text-[var(--color-text)]">{session.type}</h3>
+                <p class="font-mono text-xs text-[var(--color-text-muted)]">
+                  {session.dayName} • {session.dateDisplay}
+                </p>
+              </div>
+
+              <div class="flex items-center gap-2">
+                {session.isFullyCompleted && (
+                  <div class="w-8 h-8 rounded-full bg-lime flex items-center justify-center">
+                    <svg class="w-5 h-5 text-black" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M5 13l4 4L19 7" />
+                    </svg>
+                  </div>
+                )}
+                {!session.isFullyCompleted && session.exerciseCount > 0 && (
+                  <div class="text-right">
+                    <span class="font-mono text-sm text-[var(--color-text)]">{session.completedCount}/{session.exerciseCount}</span>
+                  </div>
+                )}
+              </div>
+            </div>
+
+            <!-- Session note -->
+            {session.log.session_note && (
+              <p class="text-sm text-[var(--color-text-muted)] mb-3 italic">
+                "{session.log.session_note}"
+              </p>
+            )}
+
+            <!-- Finisher time if available -->
+            {session.log.finisher_done && session.log.finisher_time && (
+              <div class="flex items-center gap-2 mb-3">
+                <span class="font-mono text-xs text-[var(--color-text-dim)]">Finisher:</span>
+                <span class="font-mono text-sm text-lime">{session.log.finisher_time}</span>
+              </div>
+            )}
+
+            <!-- Claude insight preview -->
+            {session.log.claude_insight && (
+              <div class="p-3 rounded-lg bg-[var(--color-lime)]/5 border border-[var(--color-lime)]/20">
+                <div class="flex items-center gap-2 mb-1">
+                  <div class="w-4 h-4 rounded bg-lime flex items-center justify-center">
+                    <svg class="w-2.5 h-2.5 text-black" fill="currentColor" viewBox="0 0 24 24">
+                      <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"/>
+                    </svg>
+                  </div>
+                  <span class="font-mono text-[10px] text-lime uppercase tracking-wider">Claude's Take</span>
+                </div>
+                <p class="text-xs text-[var(--color-text-muted)] line-clamp-2">
+                  {session.log.claude_insight}
+                </p>
+              </div>
+            )}
+          </a>
+        ))}
+      </div>
+    ) : (
+      <div class="text-center py-12">
+        <div class="w-16 h-16 rounded-full bg-[var(--color-card)] border border-[var(--color-border)] mx-auto flex items-center justify-center mb-4">
+          <svg class="w-8 h-8 text-[var(--color-text-muted)]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2" />
+          </svg>
+        </div>
+        <h2 class="font-display text-2xl text-[var(--color-text-muted)]">No Sessions Yet</h2>
+        <p class="text-sm text-[var(--color-text-dim)] mt-2">Complete your first workout to see it here.</p>
+      </div>
+    )}
+
+    <!-- Footer -->
+    <footer class="text-center py-6 mt-8 border-t border-[var(--color-border)]/50">
+      <p class="font-mono text-xs text-[var(--color-text-dim)]">
+        Updated via Claude • Powered by vibes
+      </p>
+    </footer>
+  </div>
+</Layout>

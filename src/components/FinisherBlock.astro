@@ -1,0 +1,38 @@
+---
+interface Props {
+  name: string;
+  rounds: number;
+  details: string;
+  done?: boolean;
+  time?: string;
+}
+
+const { name, rounds, details, done, time } = Astro.props;
+const isPending = done === undefined;
+---
+
+<div class={`
+  p-4 rounded-xl border-2 border-dashed
+  ${done ? 'border-[var(--color-lime)]/40 bg-[var(--color-lime)]/5' : 'border-[var(--color-amber)]/40 bg-[var(--color-amber)]/5'}
+`}>
+  <div class="flex items-center justify-between mb-2">
+    <span class="font-mono text-xs uppercase tracking-wider text-[var(--color-text-muted)]">
+      Finisher
+    </span>
+    {done && time && (
+      <span class="font-mono text-sm text-lime font-semibold">{time}</span>
+    )}
+    {isPending && (
+      <span class="font-mono text-xs text-[var(--color-amber)]">Pending</span>
+    )}
+  </div>
+
+  <h3 class="font-display text-lg text-[var(--color-text)]">{name}</h3>
+
+  <div class="mt-2 flex items-center gap-3">
+    <span class="font-mono text-2xl font-bold text-[var(--color-text)]">{rounds}</span>
+    <span class="text-sm text-[var(--color-text-muted)]">rounds</span>
+  </div>
+
+  <p class="mt-2 text-sm text-[var(--color-text-dim)]">{details}</p>
+</div>

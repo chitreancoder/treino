@@ -1,0 +1,119 @@
+@import url('https://fonts.googleapis.com/css2?family=Bebas+Neue&family=JetBrains+Mono:wght@400;500;600;700&family=Inter:wght@400;500;600&display=swap');
+@import "tailwindcss";
+
+@theme {
+  --font-display: 'Bebas Neue', sans-serif;
+  --font-mono: 'JetBrains Mono', monospace;
+  --font-body: 'Inter', sans-serif;
+
+  --color-bg: #0A0A0A;
+  --color-card: #141414;
+  --color-card-hover: #1A1A1A;
+  --color-border: #262626;
+
+  --color-text: #F5F5F5;
+  --color-text-muted: #737373;
+  --color-text-dim: #525252;
+
+  --color-lime: #BFFF00;
+  --color-lime-dim: #8FB300;
+  --color-amber: #FBBF24;
+  --color-red: #EF4444;
+  --color-blue: #3B82F6;
+}
+
+* {
+  -webkit-tap-highlight-color: transparent;
+}
+
+html {
+  background-color: var(--color-bg);
+  color: var(--color-text);
+  font-family: var(--font-body);
+}
+
+body {
+  min-height: 100dvh;
+  background: var(--color-bg);
+  background-image:
+    radial-gradient(ellipse at top, rgba(191, 255, 0, 0.03) 0%, transparent 50%),
+    linear-gradient(180deg, var(--color-bg) 0%, #0D0D0D 100%);
+}
+
+/* Scrollbar */
+::-webkit-scrollbar {
+  width: 4px;
+}
+::-webkit-scrollbar-track {
+  background: var(--color-bg);
+}
+::-webkit-scrollbar-thumb {
+  background: var(--color-border);
+  border-radius: 2px;
+}
+
+/* Custom utilities */
+.font-display {
+  font-family: var(--font-display);
+  letter-spacing: 0.05em;
+}
+
+.font-mono {
+  font-family: var(--font-mono);
+}
+
+.text-lime {
+  color: var(--color-lime);
+}
+
+.bg-lime {
+  background-color: var(--color-lime);
+}
+
+.border-lime {
+  border-color: var(--color-lime);
+}
+
+/* Glow effects */
+.glow-lime {
+  box-shadow: 0 0 20px rgba(191, 255, 0, 0.15);
+}
+
+.text-glow-lime {
+  text-shadow: 0 0 20px rgba(191, 255, 0, 0.5);
+}
+
+/* Animation */
+@keyframes fadeUp {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.animate-fade-up {
+  animation: fadeUp 0.4s ease-out forwards;
+}
+
+.stagger-1 { animation-delay: 0.05s; }
+.stagger-2 { animation-delay: 0.1s; }
+.stagger-3 { animation-delay: 0.15s; }
+.stagger-4 { animation-delay: 0.2s; }
+.stagger-5 { animation-delay: 0.25s; }
+.stagger-6 { animation-delay: 0.3s; }
+.stagger-7 { animation-delay: 0.35s; }
+.stagger-8 { animation-delay: 0.4s; }
+
+/* Pulse for pending items */
+@keyframes pulse-soft {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.6; }
+}
+
+.animate-pulse-soft {
+  animation: pulse-soft 2s ease-in-out infinite;
+}

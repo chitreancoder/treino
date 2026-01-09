@@ -1,2 +1,17 @@
 {
+  "2026-01-09": {
+    "completed": true,
+    "session_note": "Solid session, everything done",
+    "exercises": [
+      { "id": "front-squat", "actual_kg": 66.5, "done": true, "feeling": "Felt light - go higher next time" },
+      { "id": "broad-jumps", "done": true, "feeling": "Good" },
+      { "id": "explosive-stepups", "actual_kg": 40, "done": true, "feeling": "Form felt off - review technique" },
+      { "id": "single-leg-rdl", "actual_kg": 20, "done": true, "feeling": "Solid" },
+      { "id": "hip-thrust", "actual_kg": 40, "done": true, "feeling": "Good" }
+    ],
+    "core_done": true,
+    "finisher_done": true,
+    "finisher_time": "10:43",
+    "claude_insight": "All exercises completed. Front squat felt light at 66.5kg - consider bumping to 70kg next week. Review step-up form before next lower session."
+  }
 }

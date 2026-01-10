@@ -366,19 +366,61 @@ const defaultDate = sortedDates[sortedDates.length - 1] || new Date().toLocaleDa
     // Render content
     document.getElementById('workout-content').innerHTML = html;
 
-    // Update week nav to show current date
-    const weekNavButtons = document.querySelectorAll('.week-day-btn');
-    weekNavButtons.forEach(btn => {
-      const btnDate = btn.getAttribute('data-date');
-      if (btnDate === displayDate) {
-        btn.classList.add('bg-lime', 'text-black');
-        btn.classList.remove('bg-[var(--color-card)]', 'border', 'border-[var(--color-border)]', 'hover:border-[var(--color-lime)]', 'text-[var(--color-text)]');
-      } else if (btnDate === userToday) {
-        const dayNum = btn.querySelector('.day-num');
-        if (dayNum) {
-          dayNum.classList.add('underline', 'decoration-lime');
-        }
+    // Regenerate week nav for the correct week
+    function renderWeekNav() {
+      const [year, month, day] = displayDate.split('-').map(Number);
+      const currentDateObj = new Date(year, month - 1, day, 12, 0, 0);
+      const dayOfWeek = currentDateObj.getDay();
+      const mondayOffset = dayOfWeek === 0 ? -6 : 1 - dayOfWeek;
+
+      const dayLetters = ['M', 'T', 'W', 'T', 'F', 'S', 'S'];
+      const weekDates = [];
+
+      for (let i = 0; i < 7; i++) {
+        const d = new Date(year, month - 1, day + mondayOffset + i, 12, 0, 0);
+        const dateStr = `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, '0')}-${String(d.getDate()).padStart(2, '0')}`;
+        weekDates.push({
+          date: dateStr,
+          dayLetter: dayLetters[i],
+          dayNum: d.getDate(),
+          hasWorkout: availableDates.includes(dateStr),
+          isCurrent: dateStr === displayDate,
+          isToday: dateStr === userToday
+        });
       }
-    });
+
+      // Find prev/next dates
+      const sortedAvailable = [...availableDates].sort();
+      const currentIdx = sortedAvailable.indexOf(displayDate);
+      const prevDate = currentIdx > 0 ? sortedAvailable[currentIdx - 1] : null;
+      const nextDate = currentIdx < sortedAvailable.length - 1 ? sortedAvailable[currentIdx + 1] : null;
+
+      const weekNavHtml = `
+        <nav class="flex items-center justify-between mb-6">
+          <a href="${prevDate ? `/day/${prevDate}` : '#'}" class="w-10 h-10 rounded-full flex items-center justify-center transition-colors ${prevDate ? 'bg-[var(--color-card)] border border-[var(--color-border)] hover:border-[var(--color-lime)]' : 'opacity-30 pointer-events-none'}">
+            <svg class="w-5 h-5 text-[var(--color-text)]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7" />
+            </svg>
+          </a>
+          <div class="flex gap-1">
+            ${weekDates.map(day => `
+              <a href="${day.hasWorkout ? `/day/${day.date}` : '#'}" data-date="${day.date}" class="week-day-btn w-9 h-12 rounded-lg flex flex-col items-center justify-center text-xs font-mono transition-all ${day.isCurrent ? 'bg-lime text-black' : ''} ${!day.isCurrent && day.hasWorkout ? 'bg-[var(--color-card)] border border-[var(--color-border)] hover:border-[var(--color-lime)] text-[var(--color-text)]' : ''} ${!day.isCurrent && !day.hasWorkout ? 'text-[var(--color-text-dim)] pointer-events-none' : ''}">
+                <span class="text-[10px] opacity-70">${day.dayLetter}</span>
+                <span class="day-num font-semibold ${day.isToday && !day.isCurrent ? 'underline decoration-lime' : ''}">${day.dayNum}</span>
+              </a>
+            `).join('')}
+          </div>
+          <a href="${nextDate ? `/day/${nextDate}` : '#'}" class="w-10 h-10 rounded-full flex items-center justify-center transition-colors ${nextDate ? 'bg-[var(--color-card)] border border-[var(--color-border)] hover:border-[var(--color-lime)]' : 'opacity-30 pointer-events-none'}">
+            <svg class="w-5 h-5 text-[var(--color-text)]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
+            </svg>
+          </a>
+        </nav>
+      `;
+
+      document.getElementById('week-nav-container').innerHTML = weekNavHtml;
+    }
+
+    renderWeekNav();
   </script>
 </Layout>

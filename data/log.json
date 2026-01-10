@@ -131,7 +131,7 @@
     "completed": true,
     "session_note": "Saturday Zone 2 treadmill run",
     "exercises": [
-      { "id": "treadmill-zone2", "actual_kg": null, "done": true, "feeling": "6.31km in 43:36 @ 9.2 speed" }
+      { "id": "cardio-zone2", "actual_kg": null, "done": true, "feeling": "6.31km in 43:36 @ 9.2 speed" }
     ],
     "core_done": false,
     "finisher_done": false,

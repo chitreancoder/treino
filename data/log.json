@@ -126,5 +126,16 @@
     "finisher_done": true,
     "finisher_time": "10:43",
     "claude_insight": "All exercises completed. Front squat felt light at 66.5kg - bump to 70-75kg next time. Step-up form needs attention."
+  },
+  "2026-01-10": {
+    "completed": true,
+    "session_note": "Saturday Zone 2 treadmill run",
+    "exercises": [
+      { "id": "treadmill-zone2", "actual_kg": null, "done": true, "feeling": "6.31km in 43:36 @ 9.2 speed" }
+    ],
+    "core_done": false,
+    "finisher_done": false,
+    "mobility_done": false,
+    "claude_insight": "Solid Zone 2 work. 6.31km at 8.7 km/h avg pace - consistent with last week's 6.2km. Building that aerobic base for the pitch."
   }
 }

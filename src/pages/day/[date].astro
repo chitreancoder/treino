@@ -75,7 +75,7 @@ const completedExercises = dayLog?.exercises?.filter((e: any) => e.done)?.length
     <WeekNav currentDate={date} availableDates={availableDates} />
 
     <!-- Header -->
-    <header class="mb-8 animate-fade-up">
+    <header class="mb-8">
       <div class="flex items-center justify-between mb-4">
         <div>
           <div class="flex items-center gap-2">
@@ -130,8 +130,8 @@ const completedExercises = dayLog?.exercises?.filter((e: any) => e.done)?.length
       <>
         <!-- Warmup -->
         {dayPlan.warmup && (
-          <section class="mb-6 animate-fade-up stagger-1">
-            <div class="p-3 rounded-lg bg-[var(--color-card)]/50 border border-[var(--color-border)]/50">
+          <section class="mb-6">
+            <div class="p-3 rounded-lg bg-[var(--color-card)] border border-[var(--color-border)]">
               <span class="font-mono text-xs text-[var(--color-text-dim)] uppercase">Warmup</span>
               <p class="text-sm text-[var(--color-text-muted)] mt-1">{dayPlan.warmup}</p>
             </div>
@@ -139,14 +139,14 @@ const completedExercises = dayLog?.exercises?.filter((e: any) => e.done)?.length
         )}
 
         <!-- Main exercises -->
-        <section class="mb-8 animate-fade-up stagger-2">
+        <section class="mb-8">
           <SectionHeader title="Main Work" subtitle={`${dayPlan.exercises.length} exercises`} />
           <div class="space-y-3">
             {dayPlan.exercises.map((exercise: any, i: number) => {
               const exerciseLog = getExerciseLog(exercise.id);
               const lastWeekKg = getLastWeekKg(exercise.id);
               return (
-                <div class={`animate-fade-up stagger-${Math.min(i + 3, 8)}`}>
+                <div>
                   <ExerciseRow
                     name={exercise.name}
                     sets={exercise.sets}
@@ -166,7 +166,7 @@ const completedExercises = dayLog?.exercises?.filter((e: any) => e.done)?.length
 
         <!-- Core -->
         {dayPlan.core && dayPlan.core.length > 0 && (
-          <section class="mb-8 animate-fade-up stagger-6">
+          <section class="mb-8">
             <SectionHeader title="Core" />
             <div class="grid grid-cols-2 gap-3">
               {dayPlan.core.map((exercise: any) => (
@@ -191,7 +191,7 @@ const completedExercises = dayLog?.exercises?.filter((e: any) => e.done)?.length
 
         <!-- Finisher -->
         {dayPlan.finisher && (
-          <section class="mb-8 animate-fade-up stagger-7">
+          <section class="mb-8">
             <SectionHeader title="Finisher" />
             <FinisherBlock
               name={dayPlan.finisher.name}
@@ -205,7 +205,7 @@ const completedExercises = dayLog?.exercises?.filter((e: any) => e.done)?.length
 
         <!-- Mobility (for cardio/recovery days) -->
         {dayPlan.mobility && (
-          <section class="mb-8 animate-fade-up stagger-7">
+          <section class="mb-8">
             <SectionHeader title="Mobility" subtitle={dayPlan.mobility.duration} />
             <div class="p-4 rounded-xl bg-[var(--color-card)] border border-[var(--color-border)]">
               <h4 class="font-display text-lg text-[var(--color-text)]">{dayPlan.mobility.name}</h4>
@@ -228,7 +228,7 @@ const completedExercises = dayLog?.exercises?.filter((e: any) => e.done)?.length
 
         <!-- Session note -->
         {dayLog?.session_note && (
-          <section class="mb-6 animate-fade-up stagger-8">
+          <section class="mb-6">
             <div class="p-4 rounded-xl bg-[var(--color-card)] border border-[var(--color-border)]">
               <span class="font-mono text-xs text-[var(--color-text-dim)] uppercase">Session Notes</span>
               <p class="text-sm text-[var(--color-text)] mt-2">"{dayLog.session_note}"</p>
@@ -238,7 +238,7 @@ const completedExercises = dayLog?.exercises?.filter((e: any) => e.done)?.length
 
         <!-- Claude insight -->
         {dayLog?.claude_insight && (
-          <section class="mb-8 animate-fade-up stagger-8">
+          <section class="mb-8">
             <ClaudeInsight insight={dayLog.claude_insight} />
           </section>
         )}

@@ -137,5 +137,30 @@
     "finisher_done": false,
     "mobility_done": false,
     "claude_insight": "Solid Zone 2 work. 6.31km at 8.7 km/h avg pace - consistent with last week's 6.2km. Building that aerobic base for the pitch."
+  },
+  "2026-01-11": {
+    "completed": true,
+    "session_note": "Sunday 5v5 football",
+    "exercises": [
+      { "id": "walk", "actual_kg": null, "done": true, "feeling": "90 min 5v5 match" }
+    ],
+    "core_done": false,
+    "finisher_done": false,
+    "claude_insight": "90 mins of 5v5 is solid cardio and sport-specific work. Better than rest day - good active recovery for a right back."
+  },
+  "2026-01-12": {
+    "completed": true,
+    "session_note": "Lower + Power - all RX'd",
+    "exercises": [
+      { "id": "back-squat", "actual_kg": 95, "done": true, "feeling": "Hit target" },
+      { "id": "box-jump", "actual_kg": null, "done": true, "feeling": "2x20kg + 1x5kg plates" },
+      { "id": "lateral-bounds", "actual_kg": null, "done": true, "feeling": "Did broad jumps instead - better for power" },
+      { "id": "bulgarian-split", "actual_kg": null, "done": true, "feeling": "2x16kg KBs" },
+      { "id": "rdl", "actual_kg": 85, "done": true, "feeling": "Hit target" }
+    ],
+    "core_done": true,
+    "finisher_done": true,
+    "finisher_time": "8:33",
+    "claude_insight": "Full session RX'd. Swapping lateral bounds for broad jumps is smart - more power production, less lateral stress. Finisher in 8:33 shows good conditioning. Week 3 starting strong."
   }
 }

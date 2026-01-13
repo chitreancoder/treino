@@ -162,5 +162,17 @@
     "finisher_done": true,
     "finisher_time": "8:33",
     "claude_insight": "Full session RX'd. Swapping lateral bounds for broad jumps is smart - more power production, less lateral stress. Finisher in 8:33 shows good conditioning. Week 3 starting strong."
+  },
+  "2026-01-13": {
+    "completed": true,
+    "session_note": "HIIT Tuesday - bike sprints + row intervals",
+    "exercises": [
+      { "id": "air-bike-sprints", "actual_kg": null, "done": true, "feeling": "10 rounds 20/40 - 85 cals" },
+      { "id": "ski-erg", "actual_kg": null, "done": true, "feeling": "Rowed instead: 8x250m, 2116m total, 1:53/500m avg" }
+    ],
+    "core_done": false,
+    "finisher_done": false,
+    "mobility_done": true,
+    "claude_insight": "Solid HIIT session. Did 10 rounds on bike instead of 8 - extra volume. Swapped ski-erg for row and added more rounds (8 vs 5). 1:53/500m is a strong pace for intervals. Conditioning on point."
   }
 }

@@ -174,5 +174,20 @@
     "finisher_done": false,
     "mobility_done": true,
     "claude_insight": "Solid HIIT session. Did 10 rounds on bike instead of 8 - extra volume. Swapped ski-erg for row and added more rounds (8 vs 5). 1:53/500m is a strong pace for intervals. Conditioning on point."
+  },
+  "2026-01-14": {
+    "completed": true,
+    "session_note": "Upper body Wednesday - all lifts strong",
+    "exercises": [
+      { "id": "bench-press", "actual_kg": 60, "done": true, "feeling": "Above target again" },
+      { "id": "one-arm-row", "actual_kg": 26, "done": true, "feeling": null },
+      { "id": "face-pull", "actual_kg": 35, "done": true, "feeling": "Big jump from last week" },
+      { "id": "pull-ups", "actual_kg": null, "done": true, "feeling": "Bodyweight" }
+    ],
+    "core_done": true,
+    "finisher_done": true,
+    "finisher_time": "9:10",
+    "finisher_note": "20kg KB",
+    "claude_insight": "Strong upper session. Bench staying at 60kg consistently - well above Week 3 target. Face pull jumped to 35kg from 30kg last week - shoulder stability improving. DB row up to 26kg. Finisher sub-10 with heavier KB shows conditioning gains."
   }
 }

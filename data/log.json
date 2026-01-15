@@ -189,5 +189,16 @@
     "finisher_time": "9:10",
     "finisher_note": "20kg KB",
     "claude_insight": "Strong upper session. Bench staying at 60kg consistently - well above Week 3 target. Face pull jumped to 35kg from 30kg last week - shoulder stability improving. DB row up to 26kg. Finisher sub-10 with heavier KB shows conditioning gains."
+  },
+  "2026-01-15": {
+    "completed": true,
+    "session_note": "Thursday Zone 2 row",
+    "exercises": [
+      { "id": "rower-zone2", "actual_kg": null, "done": true, "feeling": "8240m in 40min, 2:16/500m avg" }
+    ],
+    "core_done": false,
+    "finisher_done": false,
+    "mobility_done": false,
+    "claude_insight": "Solid steady-state work. 8240m is close to your Jan 8 session (8413m) - consistent pacing. 2:16/500m is good Zone 2 territory for aerobic base building."
   }
 }

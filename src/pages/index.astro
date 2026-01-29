@@ -53,8 +53,8 @@ const defaultDate = sortedDates[sortedDates.length - 1] || new Date().toLocaleDa
     // Determine user's actual today
     const userToday = new Date().toLocaleDateString('en-CA');
 
-    // Use today if available, otherwise use most recent date
-    const displayDate = sortedDates.includes(userToday) ? userToday : sortedDates[sortedDates.length - 1];
+    // Always show today - if no workout, it will show rest day
+    const displayDate = userToday;
 
     const dayData = allData[displayDate];
     const todayPlan = dayData?.plan;
@@ -389,11 +389,11 @@ const defaultDate = sortedDates[sortedDates.length - 1] || new Date().toLocaleDa
         });
       }
 
-      // Find prev/next dates
+      // Find prev/next workout dates relative to displayed date
       const sortedAvailable = [...availableDates].sort();
-      const currentIdx = sortedAvailable.indexOf(displayDate);
-      const prevDate = currentIdx > 0 ? sortedAvailable[currentIdx - 1] : null;
-      const nextDate = currentIdx < sortedAvailable.length - 1 ? sortedAvailable[currentIdx + 1] : null;
+      // Find most recent past workout and next future workout
+      const prevDate = sortedAvailable.filter(d => d < displayDate).pop() || null;
+      const nextDate = sortedAvailable.find(d => d > displayDate) || null;
 
       const weekNavHtml = `
         <nav class="flex items-center justify-between mb-6">

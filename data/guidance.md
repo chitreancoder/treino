@@ -52,6 +52,38 @@
 
 ---
 
+## Session Duration Guidelines
+
+**Target session time: 50-65 minutes**
+
+### Minimum time breakdown:
+- **Warmup:** 10 min
+- **Strength work:** 20-30 min minimum (includes rest periods)
+- **WOD/Conditioning:** 10-20 min
+- **Cool-down:** 5 min
+
+### If strength portion is short (under 15 min):
+Choose one or more of these options to fill the time:
+- Extend WOD to 15-18 min, OR
+- Add accessory EMOM/complex work (6-10 min), OR
+- Add post-WOD accessory circuit (core, carries, KB work)
+
+### WOD duration by day type:
+| Day Type | WOD Duration | Notes |
+|----------|--------------|-------|
+| Heavy lift days (Mon/Tue) | 10-15 min | Strength is focus, WOD supports |
+| Light days (Wed) | 12-15 min | More conditioning emphasis |
+| Hybrid days (Fri) | 12-15 min | Balance barbell skill + conditioning |
+| Long WOD days (Sat) | 15-22 min | Chipper/mixed modality focus |
+
+### Accessory options for short days:
+- **Hinge days:** Hang pulls, KB swings, farmer/suitcase carries, RDLs
+- **Squat days:** Walking lunges, step-ups, goblet squats, cossack squats
+- **Hybrid days:** Barbell complexes, snatch/clean skill EMOMs
+- **All days:** Core work (planks, hollow holds, dead bugs), KB rows
+
+---
+
 ## Nutrition & Recovery
 
 ### Caloric Intake: 1600-1800 kcal/day

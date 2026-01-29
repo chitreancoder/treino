@@ -1,308 +1,584 @@
 {
   "athlete": {
     "name": "JD",
-    "sport": "Football (Soccer)",
-    "position": "Right Back",
-    "goal": "74kg (-10kg)",
-    "current_weight": 84
+    "sport": "CrossFit",
+    "position": null,
+    "goal": "Fat Loss + Strength Maintenance",
+    "current_weight": 84,
+    "target_weight": null,
+    "lifts": {
+      "snatch": 80,
+      "clean_and_jerk": 100,
+      "deadlift": 140,
+      "back_squat": 140,
+      "bench_press": 95
+    }
   },
   "cycle": {
-    "name": "Return + Build Phase",
-    "start_date": "2025-12-31",
-    "end_date": "2026-01-16"
+    "name": "6-Week CrossFit Fat Loss Cycle",
+    "start_date": "2026-02-02",
+    "end_date": "2026-03-14"
   },
   "weeks": {
     "week-1": {
-      "2025-12-31": {
-        "day": "Wednesday",
-        "type": "Cardio Zone 2",
-        "warmup": "Inch Worms 3x10, Glute Bridge 3x20, Hollow Rocks 3x20 (Circuit x3)",
+      "2026-02-02": {
+        "day": "Monday",
+        "type": "Heavy Lower (Back Squat) + WOD",
+        "warmup": "250m row + 250m bike, easy pace. 3 rounds: 10 air squats, 10 walking lunges, 10 KB swings (20kg). 2 rounds: 5 back squats empty bar, 5 good mornings empty bar",
         "exercises": [
-          { "id": "rowing-zone2", "name": "Rowing (Zone 2)", "sets": "40 min", "target_kg": null, "notes": "529 cal / 8811m" }
+          { "id": "back-squat", "name": "Back Squat", "sets": "4x5", "target_kg": 105, "target_pct": "70-80%", "notes": "Full depth, controlled descent, explosive out of the hole. Rest 2-3 min" }
         ],
         "core": [],
         "finisher": {
-          "name": "Turkish Get Up",
-          "rounds": 1,
-          "details": "5+5 reps @ 8kg KB"
-        }
+          "name": "12-min AMRAP",
+          "rounds": null,
+          "details": "10 KB swings (24kg) + 10 box jumps (20-24\") + 10 DB thrusters (2x16-20kg)"
+        },
+        "mobility": { "name": "Cool-down", "duration": "5 min", "details": "Light stretching, walk, easy breathing" }
       },
-      "2026-01-01": {
+      "2026-02-03": {
+        "day": "Tuesday",
+        "type": "Heavy Hinge (Deadlift) + WOD",
+        "warmup": "250m row + 250m bike, easy. 3 rounds: 10 Romanian deadlifts (light bar), 10 KB swings (20kg), 10 glute bridges. 2 rounds: 3 deadlifts empty bar, 3 good mornings empty bar",
+        "exercises": [
+          { "id": "deadlift", "name": "Deadlift", "sets": "4x3", "target_kg": 105, "target_pct": "70-80%", "notes": "Tight setup, full extension, controlled lowering. Rest 2-3 min" }
+        ],
+        "core": [],
+        "finisher": {
+          "name": "10-min EMOM",
+          "rounds": 5,
+          "details": "Min 1: 6 power cleans (40-50kg). Min 2: 10 KB swings (24kg). Repeat."
+        },
+        "mobility": { "name": "Cool-down", "duration": "5 min", "details": "Light stretching, breathing work" }
+      },
+      "2026-02-04": {
+        "day": "Wednesday",
+        "type": "Light Lower + WOD",
+        "warmup": "250m row + light stretching. 3 rounds: 10 air squats, 10 box step-ups (each leg), 10 KB swings (20kg)",
+        "exercises": [
+          { "id": "front-squat", "name": "Front Squat", "sets": "3x8", "target_kg": 65, "notes": "Moderate load, speed emphasis. Fast out of the hole, full depth. Rest 90s" }
+        ],
+        "core": [],
+        "finisher": {
+          "name": "10-min AMRAP",
+          "rounds": null,
+          "details": "10 sandbag shoulder-to-overhead (30lb) + 15 box step-ups (each leg, 20\" box) + 20 high-knees"
+        },
+        "mobility": { "name": "Cool-down", "duration": "5 min", "details": "Walk, mobility" }
+      },
+      "2026-02-05": {
         "day": "Thursday",
-        "type": "Lower + Power",
-        "warmup": "5min bike + mobility (10-12 min)",
+        "type": "Upper Strength Day",
+        "warmup": "300m row + 300m ski, easy. 3 rounds: 10 push-ups, 10 banded face pulls, 10 overhead squats (empty bar). 2 rounds: 3 bench press empty bar, 3 strict press empty bar",
         "exercises": [
-          { "id": "back-squat", "name": "Back Squat", "sets": "4x5", "target_kg": 90, "target_pct": "60%", "notes": "Tempo 3-1-X, full depth" },
-          { "id": "box-jump", "name": "Box Jump (submax)", "sets": "4x3", "target_kg": null, "notes": "30 inch + 2x20kg plates" },
-          { "id": "split-squat-kb", "name": "Split Squat (KB)", "sets": "3x8/8", "target_kg": null, "notes": "2x16kg KBs" },
-          { "id": "rdl", "name": "RDL", "sets": "3x8", "target_kg": 72, "target_pct": "60%", "notes": null },
-          { "id": "calf-raise", "name": "Standing Calf Raise", "sets": "2x12", "target_kg": 60, "notes": null }
+          { "id": "bench-press", "name": "Bench Press", "sets": "4x6", "target_kg": 68, "target_pct": "70-75%", "notes": "Full ROM, control, no leg drive. Rest 2 min" },
+          { "id": "pull-ups-weighted", "name": "Weighted Pull-ups or DB Rows", "sets": "3x8", "target_kg": null, "notes": "Moderate load. Rest 90s" },
+          { "id": "strict-press", "name": "Strict Press or Push Press", "sets": "3x6", "target_kg": 52, "notes": "Moderate load. Rest 90s" }
         ],
-        "core": [
-          { "id": "plank", "name": "Plank", "sets": "3x1min" },
-          { "id": "toe-touches", "name": "Toe Touches", "sets": "1x15" }
-        ],
-        "finisher": null
+        "core": [],
+        "finisher": {
+          "name": "10-min EMOM",
+          "rounds": 5,
+          "details": "Min 1: 8 DB push presses (2x18kg). Min 2: 10 burpees. Repeat."
+        },
+        "mobility": { "name": "Cool-down", "duration": "5 min", "details": "Stretching, shoulder mobility" }
       },
-      "2026-01-02": {
+      "2026-02-06": {
         "day": "Friday",
-        "type": "Cardio + Recovery",
-        "warmup": "Inch Worms 3x10, Glute Bridge 3x20, Cossack Squat 3x20 (Circuit x3)",
+        "type": "Hybrid (Light Barbell + Higher-Rep WOD)",
+        "warmup": "250m row. 3 rounds: 10 air squats, 10 KB swings (20kg), 10 push-ups",
         "exercises": [
-          { "id": "bike-zone2", "name": "Bike (Zone 2)", "sets": "40 min", "target_kg": null, "notes": "440 cal" }
+          { "id": "snatch-balance", "name": "Snatch Balance or Overhead Squat", "sets": "3x5", "target_kg": 45, "notes": "Speed and technique focus. Perfect position, not heavy load. Rest 90s" }
         ],
         "core": [],
-        "finisher": null,
-        "mobility": {
-          "name": "Ankle Mobility/Rehab",
-          "duration": "10 min"
-        }
+        "finisher": {
+          "name": "12-min AMRAP",
+          "rounds": null,
+          "details": "10 DB snatches each arm (16kg, total 20 reps alternating) + 10 burpees + 10 box jumps (20-24\")"
+        },
+        "mobility": { "name": "Cool-down", "duration": "5 min", "details": "Walk, breathing" }
       },
-      "2026-01-03": {
+      "2026-02-07": {
         "day": "Saturday",
-        "type": "Upper Body",
-        "warmup": "Band pull-aparts + scap push-ups (10 min)",
+        "type": "Long / Mixed-Modality WOD",
+        "warmup": "250m row + 250m bike. 3 rounds: 10 air squats, 10 KB swings (20kg), 10 box jumps (low, 20\" box, easy)",
         "exercises": [
-          { "id": "bench-press", "name": "Bench Press", "sets": "4x6", "target_kg": 54, "target_pct": "60%", "notes": null },
-          { "id": "one-arm-row", "name": "1-Arm DB Row", "sets": "4x10/10", "target_kg": 30, "notes": null },
-          { "id": "incline-db-press", "name": "Incline DB Press", "sets": "3x10", "target_kg": 22, "notes": null },
-          { "id": "face-pull", "name": "Face Pull", "sets": "3x15", "target_kg": 25, "notes": null },
-          { "id": "pull-ups", "name": "Pull-ups", "sets": "3x8", "target_kg": null, "notes": "Bodyweight" }
-        ],
-        "core": [
-          { "id": "v-ups", "name": "V Ups", "sets": "3x15" },
-          { "id": "pallof-press", "name": "Pallof Press", "sets": "3x12", "target_kg": 25 },
-          { "id": "russian-twist", "name": "Russian Twist", "sets": "3x20", "target_kg": 12 }
-        ],
-        "finisher": null
-      },
-      "2026-01-04": {
-        "day": "Sunday",
-        "type": "Cardio + Recovery",
-        "warmup": "Inch Worms 2x10, Glute Bridge 2x15, Cossack Squat 2x10",
-        "exercises": [
-          { "id": "treadmill-zone2", "name": "Treadmill Run (Zone 2)", "sets": "40 min", "target_kg": null, "notes": "6.2km" }
+          { "id": "snatch-balance-light", "name": "Snatch Balance", "sets": "2x5", "target_kg": 40, "notes": "Light, movement quality" },
+          { "id": "ohs-light", "name": "Overhead Squat", "sets": "2x5", "target_kg": 40, "notes": "Light, staying warm" }
         ],
         "core": [],
-        "finisher": null,
-        "mobility": {
-          "name": "Ankle Rehab + Stretching",
-          "duration": "15 min"
-        }
+        "finisher": {
+          "name": "15-min Chipper for Time",
+          "rounds": 1,
+          "details": "500m row + 30 KB swings (24kg) + 20 sandbag shoulder-to-overhead (40lb) + 40 wall balls (12kg) + 20 box jumps (24\"). Goal: Steady pace, don't burn out early."
+        },
+        "mobility": { "name": "Cool-down", "duration": "5 min", "details": "Stretch, walk" }
       }
     },
     "week-2": {
-      "2026-01-05": {
+      "2026-02-09": {
         "day": "Monday",
-        "type": "Lower + Power",
-        "warmup": "5min bike + mobility (10-12 min)",
+        "type": "Heavy Lower (Back Squat) + WOD",
+        "warmup": "250m row + 250m bike, easy pace. 3 rounds: 10 air squats, 10 walking lunges, 10 KB swings (20kg). 2 rounds: 5 back squats empty bar, 5 good mornings empty bar",
         "exercises": [
-          { "id": "back-squat", "name": "Back Squat", "sets": "3x8", "target_kg": 83, "target_pct": "55%", "notes": null },
-          { "id": "box-jump", "name": "Box Jump", "sets": "3x5", "target_kg": null, "notes": "30 inch + 2x20kg plates" },
-          { "id": "lateral-bounds", "name": "Lateral Bounds", "sets": "3x6/6", "target_kg": null, "notes": "Explosive" },
-          { "id": "split-squat-kb", "name": "Split Squat (KB)", "sets": "3x10/10", "target_kg": null, "notes": "2x16kg KBs" },
-          { "id": "rdl", "name": "RDL", "sets": "3x10", "target_kg": 66, "target_pct": "55%", "notes": null }
-        ],
-        "core": [
-          { "id": "v-ups", "name": "V Ups", "sets": "3x15" },
-          { "id": "plank", "name": "Plank", "sets": "3x45s" }
-        ],
-        "finisher": {
-          "name": "KB Swings + Burpees",
-          "rounds": 5,
-          "details": "10 swings (24kg) + 5 burpees"
-        }
-      },
-      "2026-01-06": {
-        "day": "Tuesday",
-        "type": "HIIT + Mobility",
-        "warmup": "Easy 5 min",
-        "exercises": [
-          { "id": "bike-sprints", "name": "Bike Sprints", "sets": "10x30s on/30s off", "target_kg": null, "notes": "All out" },
-          { "id": "row-intervals", "name": "Row Intervals", "sets": "6x200m", "target_kg": null, "notes": "Fast pace" }
+          { "id": "back-squat", "name": "Back Squat", "sets": "4x5", "target_kg": 110, "target_pct": "75-80%", "notes": "+5kg from Week 1. Rest 2-3 min" }
         ],
         "core": [],
-        "finisher": null,
-        "mobility": {
-          "name": "Ankle Mobility",
-          "duration": "10 min"
-        }
-      },
-      "2026-01-07": {
-        "day": "Wednesday",
-        "type": "Upper Body",
-        "warmup": "Band pull-aparts + scap push-ups (10 min)",
-        "exercises": [
-          { "id": "bench-press", "name": "Bench Press", "sets": "3x10", "target_kg": 50, "target_pct": "55%", "notes": null },
-          { "id": "one-arm-row", "name": "1-Arm DB Row", "sets": "3x12/12", "target_kg": 24, "notes": null },
-          { "id": "face-pull", "name": "Face Pull", "sets": "3x15", "target_kg": 30, "notes": null },
-          { "id": "pull-ups", "name": "Pull-ups", "sets": "3x8-10", "target_kg": null, "notes": "Bodyweight" }
-        ],
-        "core": [
-          { "id": "v-ups", "name": "V Ups", "sets": "3x15" },
-          { "id": "pallof-press", "name": "Pallof Press", "sets": "3x12", "target_kg": 30 }
-        ],
         "finisher": {
-          "name": "Sled Push + Air Bike + Burpees",
-          "rounds": 5,
-          "details": "20m sled (60kg) + 10 cal bike + 5 burpees"
-        }
-      },
-      "2026-01-08": {
-        "day": "Thursday",
-        "type": "Cardio + Recovery",
-        "warmup": "Inch Worms 2x10, Glute Bridge 2x15",
-        "exercises": [
-          { "id": "rower-zone2", "name": "Rower (Zone 2)", "sets": "40 min", "target_kg": null, "notes": "8413m" }
-        ],
-        "core": [],
-        "finisher": null,
-        "mobility": {
-          "name": "Full Mobility",
-          "duration": "15 min",
-          "details": "Ankle Circles + Band Stretches, Hip 90/90 + Pigeon, Thoracic Rotations"
-        }
-      },
-      "2026-01-09": {
-        "day": "Friday",
-        "type": "Lower Unilateral",
-        "warmup": "Skipping + lunges (10 min)",
-        "exercises": [
-          { "id": "front-squat", "name": "Front Squat", "sets": "3x8", "target_kg": 66, "target_pct": "55%", "notes": null },
-          { "id": "broad-jumps", "name": "Broad Jumps", "sets": "4x5", "target_kg": null, "notes": "Max distance" },
-          { "id": "explosive-stepups", "name": "Explosive Step-ups (KB)", "sets": "3x6/6", "target_kg": 40, "notes": "2x20kg KBs" },
-          { "id": "single-leg-rdl", "name": "Single-leg RDL (KB)", "sets": "3x10/10", "target_kg": 20, "notes": null },
-          { "id": "hip-thrust", "name": "Hip Thrust", "sets": "3x12", "target_kg": 40, "notes": null }
-        ],
-        "core": [
-          { "id": "v-ups", "name": "V Ups", "sets": "3x15" },
-          { "id": "side-plank", "name": "Side Plank", "sets": "3x30s/side" }
-        ],
-        "finisher": {
-          "name": "Rower + KB Swings + Box Jumps",
-          "rounds": 5,
-          "details": "250m row + 15 swings + 8 box jumps"
-        }
-      },
-      "2026-01-10": {
-        "day": "Saturday",
-        "type": "Football / Cardio",
-        "warmup": "Inch Worms 2x10, Glute Bridge 2x15, Cossack Squat 2x10",
-        "exercises": [
-          { "id": "cardio-zone2", "name": "Bike or Treadmill (Zone 2)", "sets": "40-50 min", "target_kg": null, "notes": "Keep HR 130-145" }
-        ],
-        "core": [],
-        "finisher": null,
-        "mobility": {
-          "name": "Mobility Work",
-          "duration": "10 min",
-          "details": "Ankle Circles + Band Stretches, Hip 90/90 + Pigeon"
+          "name": "14-min AMRAP",
+          "rounds": null,
+          "details": "12 KB swings (24kg) + 8 box jumps (24\" box) + 8 DB thrusters (2x18kg). NEW: Increased time cap, higher box, different rep distribution"
         },
-        "alt_note": "OR Football Match"
+        "mobility": { "name": "Cool-down", "duration": "5 min" }
       },
-      "2026-01-11": {
-        "day": "Sunday",
-        "type": "Rest Day",
-        "warmup": null,
+      "2026-02-10": {
+        "day": "Tuesday",
+        "type": "Heavy Hinge (Deadlift) + WOD",
+        "warmup": "250m row + 250m bike, easy. 3 rounds: 10 Romanian deadlifts (light bar), 10 KB swings (20kg), 10 glute bridges",
         "exercises": [
-          { "id": "walk", "name": "Walk / Light Stretch", "sets": "30 min", "target_kg": null, "notes": "Rest day" }
+          { "id": "deadlift", "name": "Deadlift", "sets": "4x3", "target_kg": 110, "target_pct": "75-80%", "notes": "+5kg from Week 1. Rest 2-3 min" }
         ],
         "core": [],
-        "finisher": null
+        "finisher": {
+          "name": "12-min EMOM",
+          "rounds": 6,
+          "details": "Min 1: 5 power snatches (40-45kg). Min 2: 12 KB swings (24kg). Repeat. NEW: Power snatches instead of cleans, extended to 12 min"
+        },
+        "mobility": { "name": "Cool-down", "duration": "5 min" }
+      },
+      "2026-02-11": {
+        "day": "Wednesday",
+        "type": "Light Lower + WOD",
+        "warmup": "250m row + light stretching. 3 rounds: 10 air squats, 10 box step-ups (each leg), 10 KB swings (20kg)",
+        "exercises": [
+          { "id": "goblet-squat", "name": "Goblet Squat", "sets": "3x10", "target_kg": 28, "notes": "Heavier, higher reps. Rest 90s. CHANGE: Goblet squat instead of front squat" }
+        ],
+        "core": [],
+        "finisher": {
+          "name": "12-min AMRAP",
+          "rounds": null,
+          "details": "12 sandbag shoulder-to-overhead (30lb) + 12 box step-ups (each leg, 24\" box) + 18 high-knees. NEW: Longer duration, more volume, higher box"
+        },
+        "mobility": { "name": "Cool-down", "duration": "5 min" }
+      },
+      "2026-02-12": {
+        "day": "Thursday",
+        "type": "Upper Strength Day",
+        "warmup": "300m row + 300m ski, easy. 3 rounds: 10 push-ups, 10 banded face pulls, 10 overhead squats (empty bar)",
+        "exercises": [
+          { "id": "bench-press", "name": "Bench Press", "sets": "4x5", "target_kg": 72, "notes": "Heavier, fewer reps. Rest 2 min" },
+          { "id": "pull-ups-weighted", "name": "Weighted Pull-ups or DB Rows", "sets": "3x6", "target_kg": null, "notes": "Heavier load. Rest 90s" },
+          { "id": "push-press", "name": "Push Press", "sets": "3x5", "target_kg": 57, "notes": "Push press emphasis instead of strict. Rest 90s" }
+        ],
+        "core": [],
+        "finisher": {
+          "name": "12-min EMOM",
+          "rounds": 6,
+          "details": "Min 1: 6 DB push presses (2x20kg). Min 2: 12 burpees. Repeat. NEW: Heavier, extended"
+        },
+        "mobility": { "name": "Cool-down", "duration": "5 min" }
+      },
+      "2026-02-13": {
+        "day": "Friday",
+        "type": "Hybrid (Light Barbell + Higher-Rep WOD)",
+        "warmup": "250m row. 3 rounds: 10 air squats, 10 KB swings (20kg), 10 push-ups",
+        "exercises": [
+          { "id": "hang-clean-push-press", "name": "Hang Power Clean + Push Press (Complex)", "sets": "3x3", "target_kg": 47, "notes": "Complex movement instead of isolated snatch balance. Rest 2 min" }
+        ],
+        "core": [],
+        "finisher": {
+          "name": "14-min AMRAP",
+          "rounds": null,
+          "details": "12 DB snatches each arm (18kg) + 8 burpees + 12 box jumps (24\" box). NEW: Heavier DBs, extended time, higher box"
+        },
+        "mobility": { "name": "Cool-down", "duration": "5 min" }
+      },
+      "2026-02-14": {
+        "day": "Saturday",
+        "type": "Long / Mixed-Modality WOD",
+        "warmup": "250m row + 250m bike. 3 rounds: 10 air squats, 10 KB swings (20kg), 10 box jumps (easy)",
+        "exercises": [
+          { "id": "power-clean", "name": "Power Clean", "sets": "2x3", "target_kg": 50, "notes": "Different movement" },
+          { "id": "front-squat-light", "name": "Front Squat", "sets": "2x3", "target_kg": 50, "notes": "Light" }
+        ],
+        "core": [],
+        "finisher": {
+          "name": "18-min Chipper for Time",
+          "rounds": 1,
+          "details": "600m row + 35 KB swings (24kg) + 25 sandbag shoulder-to-overhead (40lb) + 35 wall balls (12kg) + 25 box jumps (24\"). NEW: Extended, higher volume"
+        },
+        "mobility": { "name": "Cool-down", "duration": "5 min" }
       }
     },
     "week-3": {
-      "2026-01-12": {
+      "2026-02-16": {
         "day": "Monday",
-        "type": "Lower + Power",
-        "warmup": "5min bike + mobility (10-12 min)",
+        "type": "Heavy Lower (Pause Back Squat) + WOD",
+        "warmup": "300m row. 3 rounds: 10 air squats, 10 walking lunges, 10 KB swings (20kg). 2 rounds: 3 pause back squats (2s hold at bottom, empty bar)",
         "exercises": [
-          { "id": "back-squat", "name": "Back Squat", "sets": "3x8", "target_kg": 95, "notes": "Controlled tempo" },
-          { "id": "box-jump", "name": "Box Jump", "sets": "3x5", "target_kg": null, "notes": "Bodyweight" },
-          { "id": "lateral-bounds", "name": "Lateral Bounds", "sets": "3x6/6", "target_kg": null, "notes": "Explosive" },
-          { "id": "bulgarian-split", "name": "DB Bulgarian Split Squat", "sets": "3x10/10", "target_kg": null, "notes": null },
-          { "id": "rdl", "name": "RDL", "sets": "3x10", "target_kg": 85, "notes": null }
+          { "id": "pause-back-squat", "name": "Pause Back Squat", "sets": "4x5", "target_kg": 115, "notes": "2-second pause at bottom. Increases time under tension, builds leg strength. Rest 2-3 min" }
         ],
-        "core": [
-          { "id": "v-ups", "name": "V Ups", "sets": "3x15" },
-          { "id": "plank", "name": "Plank", "sets": "3x45s" }
-        ],
+        "core": [],
         "finisher": {
-          "name": "Sled Push + Burpees + KB Swings",
-          "rounds": 5,
-          "details": "20m sled + 5 burpees + 15 swings"
-        }
+          "name": "13-min AMRAP",
+          "rounds": null,
+          "details": "8 hang power cleans (45kg) + 12 KB swings (24kg) + 6 box jumps (24\"). NEW: Different barbell movement (cleans), different rep scheme"
+        },
+        "mobility": { "name": "Cool-down", "duration": "5 min" }
       },
-      "2026-01-13": {
+      "2026-02-17": {
         "day": "Tuesday",
-        "type": "HIIT + Mobility",
-        "warmup": "Easy bike/row (5 min)",
+        "type": "Heavy Hinge (Trap Bar Deadlift) + WOD",
+        "warmup": "250m row + 250m ski. 3 rounds: 10 good mornings (light bar), 10 KB swings, 10 glute bridges",
         "exercises": [
-          { "id": "air-bike-sprints", "name": "Air Bike Sprints", "sets": "8x20s on/40s off", "target_kg": null, "notes": "All out" },
-          { "id": "ski-erg", "name": "Ski-Erg Intervals", "sets": "5x250m", "target_kg": null, "notes": "Fast pace" }
+          { "id": "trap-bar-deadlift", "name": "Trap Bar Deadlift", "sets": "4x3", "target_kg": 115, "notes": "Neutral grip variation. Different angle, slightly easier on lower back, allows heavier loads. Rest 2-3 min" }
         ],
         "core": [],
-        "finisher": null,
-        "mobility": {
-          "name": "Ankle Mobility",
-          "duration": "10 min"
-        }
+        "finisher": {
+          "name": "11-min EMOM",
+          "rounds": null,
+          "details": "Min 1: 4 snatch high-pulls (50kg). Min 2: 15 wall balls (12kg). Repeat. NEW: Snatch high-pulls (explosive), wall balls instead of KB/sandbag"
+        },
+        "mobility": { "name": "Cool-down", "duration": "5 min" }
       },
-      "2026-01-14": {
+      "2026-02-18": {
         "day": "Wednesday",
-        "type": "Upper Body",
-        "warmup": "Band pull-aparts + scap push-ups (10 min)",
+        "type": "Light Lower (Split Squat) + WOD",
+        "warmup": "250m row + light stretching. 3 rounds: 10 air squats, 8 split squats (each leg, light), 10 KB swings",
         "exercises": [
-          { "id": "bench-press", "name": "Bench Press", "sets": "3x10", "target_kg": 55, "notes": "Controlled tempo" },
-          { "id": "one-arm-row", "name": "1-Arm DB Row", "sets": "3x12/12", "target_kg": 26, "notes": null },
-          { "id": "face-pull", "name": "Face Pull", "sets": "3x15", "target_kg": 35, "notes": null },
-          { "id": "pull-ups", "name": "Pull-ups", "sets": "3x8-10", "target_kg": null, "notes": "Bodyweight" }
-        ],
-        "core": [
-          { "id": "v-ups", "name": "V Ups", "sets": "3x15" },
-          { "id": "pallof-press", "name": "Pallof Press", "sets": "3x12", "target_kg": 35 }
-        ],
-        "finisher": {
-          "name": "Air Bike + KB Swings + Burpees",
-          "rounds": 5,
-          "details": "12 cal + 15 swings + 5 burpees"
-        }
-      },
-      "2026-01-15": {
-        "day": "Thursday",
-        "type": "Cardio + Recovery",
-        "warmup": "Inch Worms 2x10, Cossack Squat 2x10",
-        "exercises": [
-          { "id": "bike-zone2", "name": "Bike (Zone 2)", "sets": "35-40 min", "target_kg": null, "notes": "Keep HR 130-145" }
+          { "id": "bulgarian-split-squat", "name": "Bulgarian Split Squat", "sets": "3x8 each leg", "target_kg": 19, "notes": "Rear foot elevated. DB weight 18-20kg. Single-leg emphasis, unilateral strength. Rest 90s" }
         ],
         "core": [],
-        "finisher": null,
-        "mobility": {
-          "name": "Full Mobility",
-          "duration": "15 min",
-          "details": "Ankle Circles + Band Stretches, Hip 90/90 + Pigeon, Thoracic Rotations"
-        }
-      },
-      "2026-01-16": {
-        "day": "Friday",
-        "type": "Lower Unilateral",
-        "warmup": "Skipping + lunges (10 min)",
-        "exercises": [
-          { "id": "front-squat", "name": "Front Squat", "sets": "3x8", "target_kg": 75, "notes": null },
-          { "id": "broad-jumps", "name": "Broad Jumps", "sets": "4x5", "target_kg": null, "notes": "Max distance" },
-          { "id": "walking-lunges", "name": "Walking Lunges (DB)", "sets": "3x10/10", "target_kg": null, "notes": "Controlled tempo" },
-          { "id": "single-leg-rdl", "name": "Single-leg RDL (DB)", "sets": "3x10/10", "target_kg": null, "notes": null },
-          { "id": "hip-thrust", "name": "Hip Thrust", "sets": "3x12", "target_kg": null, "notes": "Moderate load" }
-        ],
-        "core": [
-          { "id": "v-ups", "name": "V Ups", "sets": "3x15" },
-          { "id": "side-plank", "name": "Side Plank", "sets": "3x30s/side" }
-        ],
         "finisher": {
-          "name": "Rower + KB Swings + Box Jumps",
+          "name": "11-min AMRAP",
+          "rounds": null,
+          "details": "8 DB power snatches each arm (18kg, total 16 reps) + 10 sandbag ground-to-shoulder (40lb) + 15 double-unders or high-knees. NEW: Single-leg training translates to unilateral DB work"
+        },
+        "mobility": { "name": "Cool-down", "duration": "5 min" }
+      },
+      "2026-02-19": {
+        "day": "Thursday",
+        "type": "Upper Strength Day (Incline Focus)",
+        "warmup": "300m row + 300m ski. 3 rounds: 10 push-ups, 10 scapular pull-ups or lat pulldowns, 10 OH squats (light)",
+        "exercises": [
+          { "id": "incline-bench-press", "name": "Incline Bench Press", "sets": "4x6", "target_kg": 62, "notes": "Different angle than flat bench. Rest 2 min" },
+          { "id": "chin-ups", "name": "Chin-ups (weighted or strict)", "sets": "3x5", "target_kg": null, "notes": "Rest 90s" },
+          { "id": "db-shoulder-press", "name": "Dumbbell Shoulder Press (standing)", "sets": "3x8", "target_kg": 20, "notes": "Each hand. Rest 90s" }
+        ],
+        "core": [],
+        "finisher": {
+          "name": "11-min EMOM",
+          "rounds": null,
+          "details": "Min 1: 6 strict pull-ups or 8 lat pulldowns (moderate). Min 2: 12 dumbbell push presses (2x16kg). Repeat. NEW: Strict pullups, different push movement"
+        },
+        "mobility": { "name": "Cool-down", "duration": "5 min" }
+      },
+      "2026-02-20": {
+        "day": "Friday",
+        "type": "Hybrid (Snatch Complex + WOD)",
+        "warmup": "250m row. 3 rounds: 10 air squats, 10 KB swings, 10 push-ups",
+        "exercises": [
+          { "id": "power-snatch-ohs", "name": "Power Snatch + Overhead Squat (Complex)", "sets": "4x2", "target_kg": 52, "notes": "Complex includes full snatch movement, heavier than Week 2. Rest 2 min" }
+        ],
+        "core": [],
+        "finisher": {
+          "name": "13-min AMRAP",
+          "rounds": null,
+          "details": "6 sandbag clean & press (40lb) + 10 box jumps (24\") + 15 kettlebell rows (10 reps each side, 24kg). NEW: Sandbag C&J, KB rows as main movement"
+        },
+        "mobility": { "name": "Cool-down", "duration": "5 min" }
+      },
+      "2026-02-21": {
+        "day": "Saturday",
+        "type": "Long / Mixed-Modality WOD",
+        "warmup": "250m row + 250m bike + 250m ski. 3 rounds (light): 5 power cleans (50kg), 10 box jumps, 15 air squats",
+        "exercises": [
+          { "id": "mobility", "name": "Mobility Work", "sets": "5-10 min", "target_kg": null, "notes": "Light movement" }
+        ],
+        "core": [],
+        "finisher": {
+          "name": "20-min Chipper for Time",
+          "rounds": 1,
+          "details": "400m row + 40 sandbag shoulder-to-overhead (40lb) + 15 hang power cleans (50kg) + 25 wall balls (14kg, heavier ball) + 20 box jumps (24\") + 400m ski. NEW: Cleans in the middle, ski at the end, heavier wall balls"
+        },
+        "mobility": { "name": "Cool-down", "duration": "5 min" }
+      }
+    },
+    "week-4": {
+      "2026-02-23": {
+        "day": "Monday",
+        "type": "Back Squat (Higher Reps) + Short, Dense WOD",
+        "warmup": "300m row. 3 rounds: 10 air squats, 10 jump squats, 10 KB swings",
+        "exercises": [
+          { "id": "back-squat", "name": "Back Squat", "sets": "3x5", "target_kg": 120, "notes": "Reduced sets, maintained/increased load (maintenance strength). Rest 2-3 min" }
+        ],
+        "core": [],
+        "finisher": {
+          "name": "10-min AMRAP",
+          "rounds": null,
+          "details": "15 KB swings (24kg) + 10 sandbag shoulder-to-overhead (50lb, heavier) + 5 burpees. NEW: Short cap, higher density, heavier KB/sandbag"
+        },
+        "mobility": { "name": "Cool-down", "duration": "5 min" }
+      },
+      "2026-02-24": {
+        "day": "Tuesday",
+        "type": "Deadlift (Deficit) + Barbell WOD",
+        "warmup": "250m row + 250m bike. 3 rounds: 10 good mornings (light), 10 KB swings, 5 deadlifts (light bar)",
+        "exercises": [
+          { "id": "deficit-deadlift", "name": "Deficit Deadlift", "sets": "3x3", "target_kg": 105, "notes": "Standing on 1-2\" plate. Increases range of motion, builds starting strength. Rest 2-3 min" }
+        ],
+        "core": [],
+        "finisher": {
+          "name": "9-min EMOM",
+          "rounds": null,
+          "details": "Min 1: 5 front squats (50kg). Min 2: 15 DB alternating rows (18kg, each side). Repeat. NEW: Front squats, DB rows, 9-min format"
+        },
+        "mobility": { "name": "Cool-down", "duration": "5 min" }
+      },
+      "2026-02-25": {
+        "day": "Wednesday",
+        "type": "Leg Endurance (Higher Reps) + WOD",
+        "warmup": "250m row. 3 rounds: 10 air squats, 10 box step-ups (each leg), 10 KB swings",
+        "exercises": [
+          { "id": "back-squat-high-rep", "name": "Back Squat", "sets": "2x12", "target_kg": 75, "notes": "Very high rep range, lighter load, metabolic stress. Rest 2 min" }
+        ],
+        "core": [],
+        "finisher": {
+          "name": "12-min AMRAP",
+          "rounds": null,
+          "details": "20 wall balls (12kg) + 15 box jumps (20\" box, lower to increase volume) + 10 sandbag clean & jerk (30lb, lighter, full C&J movement). NEW: Wall balls first (high volume start), lighter sandbag"
+        },
+        "mobility": { "name": "Cool-down", "duration": "5 min" }
+      },
+      "2026-02-26": {
+        "day": "Thursday",
+        "type": "Upper Strength (Dumbbell Focus) + WOD",
+        "warmup": "300m row + 300m ski. 3 rounds: 10 push-ups, 10 banded pull-aparts, 10 dumbbell snatches (light, each arm)",
+        "exercises": [
+          { "id": "db-bench-press", "name": "Dumbbell Bench Press", "sets": "4x6", "target_kg": 24, "notes": "Each hand. Dumbbell-focused upper body, unilateral emphasis. Rest 2 min" },
+          { "id": "single-arm-db-row", "name": "Single-arm Dumbbell Rows", "sets": "3x8 each side", "target_kg": 24, "notes": "Rest 90s" },
+          { "id": "db-pullover", "name": "Dumbbell Pullovers", "sets": "3x10", "target_kg": 22, "notes": "Rest 90s" }
+        ],
+        "core": [],
+        "finisher": {
+          "name": "10-min EMOM",
           "rounds": 5,
-          "details": "250m row + 15 swings + 8 box jumps"
-        }
+          "details": "Min 1: 6 dumbbell power snatches (each arm, 20kg). Min 2: 8 burpee box jump-overs (24\"). NEW: Power snatches with DBs, box jump-overs"
+        },
+        "mobility": { "name": "Cool-down", "duration": "5 min" }
+      },
+      "2026-02-27": {
+        "day": "Friday",
+        "type": "Hybrid (Power Focus + Speed WOD)",
+        "warmup": "250m row. 3 rounds: 5 jump squats, 5 push-ups, 5 tuck jumps",
+        "exercises": [
+          { "id": "power-clean-push-press", "name": "Power Clean + Push Press", "sets": "5x2", "target_kg": 50, "notes": "Speed emphasis, 5 sets. Increased volume on power, lighter load, pure speed. Rest 2 min" }
+        ],
+        "core": [],
+        "finisher": {
+          "name": "14-min AMRAP",
+          "rounds": null,
+          "details": "8 KB snatches each arm (20kg, total 16 reps, lighter KB) + 10 double-unders or high-knees (20 reps) + 6 box jumps (30\" box, heavier box, fewer reps). NEW: Lighter KB, harder box, extended time cap"
+        },
+        "mobility": { "name": "Cool-down", "duration": "5 min" }
+      },
+      "2026-02-28": {
+        "day": "Saturday",
+        "type": "Long / Mixed-Modality WOD (Sled Push Emphasis)",
+        "warmup": "250m row + 250m bike + 250m ski. 3 rounds (light): 10 air squats, 5 sled pushes (light load), 10 jump squats",
+        "exercises": [
+          { "id": "movement-prep", "name": "Light Movement Prep", "sets": "5 min", "target_kg": null, "notes": "No heavy strength" }
+        ],
+        "core": [],
+        "finisher": {
+          "name": "22-min Chipper for Time",
+          "rounds": 1,
+          "details": "40 sled pushes (light load, ~50lb) + 600m row + 30 KB swings (24kg) + 20 sandbag thrusters (40lb) + 25 wall balls (12kg) + 20 box jumps (24\"). NEW: Sled work, thrusters, longer format"
+        },
+        "mobility": { "name": "Cool-down", "duration": "5 min" }
+      }
+    },
+    "week-5": {
+      "2026-03-02": {
+        "day": "Monday",
+        "type": "Back Squat (Heavy Singles) + Barbell WOD",
+        "warmup": "300m row. 3 rounds: 10 air squats, 10 walking lunges, 5 back squats (light bar)",
+        "exercises": [
+          { "id": "back-squat", "name": "Back Squat", "sets": "3x3", "target_kg": 125, "notes": "Heavy singles emphasis. Lower volume, higher load, strength maintenance. Rest 2-3 min" }
+        ],
+        "core": [],
+        "finisher": {
+          "name": "11-min AMRAP",
+          "rounds": null,
+          "details": "5 back squats (70kg) + 10 dumbbell power cleans (each arm, 20kg) + 12 box jumps (24\"). NEW: Back squat in the WOD, lighter load for speed"
+        },
+        "mobility": { "name": "Cool-down", "duration": "5 min" }
+      },
+      "2026-03-03": {
+        "day": "Tuesday",
+        "type": "Deadlift (Heavy Doubles) + Barbell WOD",
+        "warmup": "250m row + 250m ski. 3 rounds: 10 good mornings, 10 KB swings, 3 deadlifts (light)",
+        "exercises": [
+          { "id": "deadlift", "name": "Deadlift", "sets": "3x2", "target_kg": 130, "notes": "Heavy doubles. Very heavy, very low reps (strength peak). Rest 3 min" }
+        ],
+        "core": [],
+        "finisher": {
+          "name": "10-min EMOM",
+          "rounds": 5,
+          "details": "Min 1: 3 power cleans (55kg). Min 2: 12 wall balls (14kg). Repeat. NEW: Heavy power cleans, wall balls, 10-min cap"
+        },
+        "mobility": { "name": "Cool-down", "duration": "5 min" }
+      },
+      "2026-03-04": {
+        "day": "Wednesday",
+        "type": "Single-Leg Strength + Cardio WOD",
+        "warmup": "250m row. 3 rounds: 10 air squats, 8 split squats (each leg, light), 10 KB swings",
+        "exercises": [
+          { "id": "pistol-squat", "name": "Assisted Pistol Squats or Pistol Squat Negatives", "sets": "3x5 each leg", "target_kg": null, "notes": "Advanced single-leg movement, bodyweight strength. Rest 90s" }
+        ],
+        "core": [],
+        "finisher": {
+          "name": "13-min AMRAP",
+          "rounds": null,
+          "details": "400m row + 20 sandbag shoulder-to-overhead (40lb) + 10 burpees. NEW: Row repeats in the WOD, sandbag focus"
+        },
+        "mobility": { "name": "Cool-down", "duration": "5 min" }
+      },
+      "2026-03-05": {
+        "day": "Thursday",
+        "type": "Upper Strength (Bench + Rows) + WOD",
+        "warmup": "300m row + 300m ski. 3 rounds: 10 push-ups, 10 banded face pulls, 10 dumbbell rows (light, each side)",
+        "exercises": [
+          { "id": "bench-press", "name": "Bench Press", "sets": "3x3", "target_kg": 82, "notes": "Heavy triples, strength maintenance. Rest 2-3 min" },
+          { "id": "barbell-row", "name": "Barbell Rows", "sets": "3x5", "target_kg": 75, "notes": "Heavy, full back. Rest 2 min" }
+        ],
+        "core": [],
+        "finisher": {
+          "name": "12-min EMOM",
+          "rounds": 6,
+          "details": "Min 1: 5 bench press (60kg). Min 2: 8 dumbbell rows (each side, 22kg). Repeat. NEW: Bench press in the WOD, barbell rows"
+        },
+        "mobility": { "name": "Cool-down", "duration": "5 min" }
+      },
+      "2026-03-06": {
+        "day": "Friday",
+        "type": "Hybrid (Olympic Lift Complex + Speed WOD)",
+        "warmup": "250m row. 3 rounds: 5 dumbbell snatches (light, each arm), 10 push-ups, 10 air squats",
+        "exercises": [
+          { "id": "clean-and-jerk", "name": "Power Clean + Push Jerk", "sets": "4x2", "target_kg": 57, "notes": "Complex barbell movement, speed emphasis. Rest 2 min" }
+        ],
+        "core": [],
+        "finisher": {
+          "name": "15-min AMRAP",
+          "rounds": null,
+          "details": "6 dumbbell thrusters each arm (18kg, total 12 reps) + 12 box jumps (24\") + 18 KB swings (24kg). NEW: Longest AMRAP in week, mixed rep schemes"
+        },
+        "mobility": { "name": "Cool-down", "duration": "5 min" }
+      },
+      "2026-03-07": {
+        "day": "Saturday",
+        "type": "Long / Sled + Sandbag Chipper",
+        "warmup": "250m row + 250m bike + 250m ski. 3 rounds: 10 sled pushes (light), 10 sandbag cleans (30lb), 10 box jumps",
+        "exercises": [
+          { "id": "mobility", "name": "Light Mobility", "sets": "5 min", "target_kg": null, "notes": "No heavy strength" }
+        ],
+        "core": [],
+        "finisher": {
+          "name": "20-min Chipper for Time",
+          "rounds": 1,
+          "details": "50 sled pushes (medium load, ~60lb, high volume) + 25 sandbag shoulder-to-overhead (50lb, heavier) + 500m row + 30 wall balls (14kg) + 20 box jumps (24\") + 400m ski. NEW: Heavy sled volume, heavier sandbag, row + ski combo"
+        },
+        "mobility": { "name": "Cool-down", "duration": "5 min" }
+      }
+    },
+    "week-6": {
+      "2026-03-09": {
+        "day": "Monday",
+        "type": "Back Squat Test + Short WOD",
+        "warmup": "300m row. 3 rounds: 10 air squats, 10 walking lunges, 5 back squats (light bar)",
+        "exercises": [
+          { "id": "back-squat-test", "name": "Back Squat Test", "sets": "Work up to heavy single", "target_kg": 125, "target_pct": "90-95%", "notes": "Example: 60x5, 80x3, 100x2, 115x1, 125x1 (test). Don't go to absolute failure, leave 1-2 reps in reserve. Rest 2-3 min between attempts" }
+        ],
+        "core": [],
+        "finisher": {
+          "name": "8-min AMRAP",
+          "rounds": null,
+          "details": "10 KB swings (24kg) + 5 box jumps (24\") + 3 burpees. Extremely short, fresh after testing"
+        },
+        "mobility": { "name": "Cool-down", "duration": "5 min" }
+      },
+      "2026-03-10": {
+        "day": "Tuesday",
+        "type": "Deadlift Test + Medium WOD",
+        "warmup": "250m row + 250m ski. 3 rounds: 10 good mornings (light), 10 KB swings, 3 deadlifts (light bar)",
+        "exercises": [
+          { "id": "deadlift-test", "name": "Deadlift Test", "sets": "Work up to heavy single", "target_kg": 130, "target_pct": "90-95%", "notes": "Example: 60x5, 100x3, 120x1, 130x1 (test). Testing week, not max effort, save reps in reserve. Rest 2-3 min between attempts" }
+        ],
+        "core": [],
+        "finisher": {
+          "name": "9-min EMOM",
+          "rounds": null,
+          "details": "Min 1: 4 power cleans (55kg). Min 2: 10 burpees. Repeat. Post-test, manageable pacing"
+        },
+        "mobility": { "name": "Cool-down", "duration": "5 min" }
+      },
+      "2026-03-11": {
+        "day": "Wednesday",
+        "type": "Test Repeat WOD from Week 1 (Benchmark)",
+        "warmup": "250m row. 3 rounds: 10 air squats, 10 box step-ups, 10 KB swings",
+        "exercises": [],
+        "core": [],
+        "finisher": {
+          "name": "10-min AMRAP (BENCHMARK)",
+          "rounds": null,
+          "details": "10 sandbag shoulder-to-overhead (30lb) + 15 box step-ups (each leg, 20\" box) + 20 high-knees. IDENTICAL to Week 1 Day 3 WOD. Compare rounds/reps vs. Week 1 - should see significant improvement!"
+        },
+        "mobility": { "name": "Cool-down", "duration": "5 min" }
+      },
+      "2026-03-12": {
+        "day": "Thursday",
+        "type": "Bench Press Test + Upper WOD",
+        "warmup": "300m row + 300m ski. 3 rounds: 10 push-ups, 10 lat pulldowns (light), 10 dumbbell shoulder presses (light)",
+        "exercises": [
+          { "id": "bench-press-test", "name": "Bench Press Test", "sets": "Work up to heavy single", "target_kg": 85, "target_pct": "90-95%", "notes": "Example: 50x5, 65x3, 80x2, 85x1 (test). Testing week, not absolute max. Rest 2-3 min between attempts" }
+        ],
+        "core": [],
+        "finisher": {
+          "name": "10-min EMOM",
+          "rounds": 5,
+          "details": "Min 1: 5 strict pull-ups (or 6 lat pulldowns). Min 2: 12 dumbbell push presses (18kg). Repeat. Short EMOM post-test"
+        },
+        "mobility": { "name": "Cool-down", "duration": "5 min" }
+      },
+      "2026-03-13": {
+        "day": "Friday",
+        "type": "Total Body Test + Mixed WOD",
+        "warmup": "250m row. 3 rounds: 5 dumbbell snatches (light, each arm), 10 push-ups, 10 air squats",
+        "exercises": [
+          { "id": "snatch-test", "name": "Snatch (Full) or Power Snatch Test", "sets": "Work up to heavy single", "target_kg": 76, "target_pct": "90-95%", "notes": "Test your weakest lift or the one you want to assess. Alternative: Clean & jerk single if preferred. Rest 2-3 min between attempts" }
+        ],
+        "core": [],
+        "finisher": {
+          "name": "12-min AMRAP",
+          "rounds": null,
+          "details": "8 dumbbell snatches each arm (18kg) + 10 box jumps (24\") + 12 wall balls (14kg). All three movements, varied rep schemes"
+        },
+        "mobility": { "name": "Cool-down", "duration": "5 min" }
+      },
+      "2026-03-14": {
+        "day": "Saturday",
+        "type": "Final Test WOD (Chipper Benchmark)",
+        "warmup": "250m row + 250m bike + 250m ski (extended). 3 rounds: 10 air squats, 10 KB swings, 10 box jumps",
+        "exercises": [
+          { "id": "movement-prep", "name": "Movement Prep Only", "sets": "5 min", "target_kg": null, "notes": "No heavy strength" }
+        ],
+        "core": [],
+        "finisher": {
+          "name": "20-min Benchmark Chipper for Time",
+          "rounds": 1,
+          "details": "500m row + 40 KB swings (24kg) + 25 sandbag shoulder-to-overhead (40lb) + 45 wall balls (12kg) + 25 box jumps (24\"). Goal: Complete faster than Week 2 Day 6 (18 min target). FINAL TEST WOD - shows improvement across strength, power, and conditioning!"
+        },
+        "mobility": { "name": "Extended Cool-down", "duration": "10 min", "details": "Extended cool-down, stretching, reflection" }
       }
     }
   }

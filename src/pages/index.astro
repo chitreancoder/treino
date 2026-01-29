@@ -182,7 +182,7 @@ const defaultDate = sortedDates[sortedDates.length - 1] || new Date().toLocaleDa
           <div>
             <div class="flex items-center gap-2">
               <span class="px-2 py-0.5 rounded text-xs font-mono bg-lime text-black">TODAY</span>
-              <p class="font-mono text-xs text-[var(--color-text-dim)] uppercase tracking-wider">${cycleName}</p>
+              ${cycleName ? `<p class="font-mono text-xs text-[var(--color-text-dim)] uppercase tracking-wider">${cycleName}</p>` : ''}
             </div>
             <h1 class="font-display text-4xl text-[var(--color-text)] mt-1">${dayName}</h1>
             <p class="font-mono text-sm text-[var(--color-text-muted)]">${dateDisplay}</p>

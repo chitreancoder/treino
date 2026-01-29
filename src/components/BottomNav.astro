@@ -1,6 +1,6 @@
 ---
 interface Props {
-  active: 'today' | 'week' | 'history' | 'timer';
+  active: 'today' | 'week' | 'history';
 }
 
 const { active } = Astro.props;
@@ -36,16 +36,6 @@ const { active } = Astro.props;
         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
       </svg>
       <span class="text-[10px] font-mono">History</span>
-    </a>
-
-    <a
-      href="/timer"
-      class={`flex flex-col items-center gap-1 px-3 py-2 rounded-lg transition-colors ${active === 'timer' ? 'text-lime' : 'text-[var(--color-text-muted)] hover:text-[var(--color-text)]'}`}
-    >
-      <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M12 6v6h4.5m4.5 0a9 9 0 11-18 0 9 9 0 0118 0z" />
-      </svg>
-      <span class="text-[10px] font-mono">Timer</span>
     </a>
   </div>
 </nav>
